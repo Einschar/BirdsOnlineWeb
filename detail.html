@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鸟类详情 - 鸟类地球Online</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- 通用导航栏 -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo">
+        <img src="data/pic/logo.svg" class="logo-icon" alt="Logo" /> <!--<span class="logo-icon">🐦</span> -->
+        鸟类地球Online
+      </a>
+      <div class="nav-actions">
+        <form class="search-form search-box">
+          <span class="search-icon">🔍</span>
+          <input type="search" class="search-input" placeholder="搜索鸟类..." aria-label="搜索鸟类">
+        </form>
+        <button class="nav-link about-btn">关于我们</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 详情页主体，由 detail.js 根据 ?id= 动态渲染 -->
+  <main id="detail-main" class="detail-page"></main>
+
+  <script src="js/common.js"></script>
+  <script src="js/detail.js"></script>
+</body>
+</html>

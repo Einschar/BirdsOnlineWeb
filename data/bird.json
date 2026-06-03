@@ -1,0 +1,333 @@
+{
+  "birds": [
+    {
+      "id": "magpie",
+      "name": "喜鹊",
+      "alias": [
+        "灰喜鹊",
+        "鹊鸟"
+      ],
+      "category": "鸦科",
+      "intro": "黑白分明、尾羽修长的常见留鸟，象征吉祥与好运。",
+      "description": "喜鹊是鸦科鹊属的鸟类，体长约40-50厘米。头部、颈部、胸腹部为黑色，翅膀和尾羽呈现蓝绿色金属光泽，肩部和腹部为白色。它们善于在树枝间跳跃，叫声清脆响亮。喜鹊广泛分布于欧亚大陆，适应性强，常见于城市公园、农田和林地边缘。在中国传统文化中，喜鹊被视为吉祥的象征，「喜鹊登枝」寓意喜事临门。",
+      "image": "https://images.unsplash.com/photo-1552728080-b9693f7d2e44?w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1552728080-b9693f7d2e44?w=1200&q=80",
+        "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=1200&q=80",
+        "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200&q=80"
+      ],
+      "params": {
+        "学名": "Pica pica",
+        "目": "雀形目",
+        "科": "鸦科",
+        "体长": "40-50 cm",
+        "分布": "欧亚大陆广泛分布"
+      },
+      "video": {
+        "bvid": "BV1GJ411x7h7"
+      },
+      "svg": "data/pic/unknown.svg",
+      "ring": 0
+    },
+    {
+      "id": "kingfisher",
+      "name": "翠鸟",
+      "alias": [
+        "普通翠鸟",
+        "鱼狗"
+      ],
+      "category": "翠鸟科",
+      "intro": "身披蓝绿羽衣的小型捕鱼高手，如宝石般闪耀。",
+      "description": "翠鸟是一类色彩艳丽的小型鸟类，普通翠鸟体长仅16-17厘米，却拥有令人惊叹的捕鱼本领。它们常栖息于河流、湖泊和池塘边，以俯冲入水的方式精准捕获小鱼。翠鸟的羽毛呈现蓝绿与橙红交织的金属光泽，在阳光下熠熠生辉。",
+      "image": "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=1200&q=80",
+        "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200&q=80"
+      ],
+      "params": {
+        "学名": "Alcedo atthis",
+        "目": "佛法僧目",
+        "科": "翠鸟科",
+        "体长": "16-17 cm",
+        "分布": "欧亚非及东南亚"
+      },
+      "video": {
+        "bvid": "BV1GJ411x7h7"
+      },
+      "svg": "data/pic/kingfisher.svg",
+      "ring": 0
+    },
+    {
+      "id": "swan",
+      "name": "天鹅",
+      "alias": [
+        "大天鹅",
+        "疣鼻天鹅"
+      ],
+      "category": "鸭科",
+      "intro": "优雅高贵的游禽，以忠贞伴侣关系闻名于世。",
+      "description": "天鹅是鸭科天鹅属的大型水鸟，体长可达140-160厘米，翼展超过2米。它们拥有修长的脖颈和纯白的羽毛，游弋于湖面时姿态极为优雅。天鹅通常终身保持单一伴侣关系，是忠贞与美好的象征。",
+      "image": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&q=80",
+        "https://images.unsplash.com/photo-1548199973-dee93e7ddc45?w=1200&q=80"
+      ],
+      "params": {
+        "学名": "Cygnus cygnus",
+        "目": "雁形目",
+        "科": "鸭科",
+        "体长": "140-160 cm",
+        "分布": "北半球温带地区"
+      },
+      "video": {
+        "bvid": "BV1GJ411x7h7"
+      },
+      "ring": 1,
+      "svg": "data/pic/swan.svg"
+    },
+    {
+      "id": "eagle",
+      "name": "金雕",
+      "alias": [
+        "金鹰",
+        "鹰王"
+      ],
+      "category": "鹰科",
+      "intro": "天空中的顶级掠食者，拥有锐利的目光与强健的翼展。",
+      "description": "金雕是鹰科雕属的大型猛禽，体长76-92厘米，翼展可达2.3米。它们栖息于山地、高原和开阔地带，以中小型哺乳动物、鸟类和腐肉为食。金雕拥有极其锐利的视觉，可以在数公里外发现猎物。",
+      "image": "https://images.unsplash.com/photo-1552728080-b9693f7d2e44?w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1552728080-b9693f7d2e44?w=1200&q=80"
+      ],
+      "params": {
+        "学名": "Aquila chrysaetos",
+        "目": "鹰形目",
+        "科": "鹰科",
+        "体长": "76-92 cm",
+        "分布": "北半球广泛分布"
+      },
+      "video": {
+        "bvid": "BV1GJ411x7h7"
+      },
+      "ring": 1,
+      "svg": "data/pic/eagle.svg"
+    },
+    {
+      "id": "green-cheek-conure",
+      "name": "绿颊锥尾鹦鹉",
+      "alias": [
+        "绿颊小太阳",
+        "小太阳鹦鹉"
+      ],
+      "category": "鹦鹉科",
+      "intro": "温顺亲人的小型锥尾鹦鹉，活泼好动，是热门宠物鹦鹉。",
+      "description": "绿颊锥尾鹦鹉原产南美洲巴西、玻利维亚等地，体长26cm左右，通体绿羽、尾羽棕红，性格粘人温顺、智商高，会学简单口令，国内受法律保护禁止私自无证饲养。",
+      "image": "https://images.unsplash.com/photo-1552728080-b9693f7d2e44?w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1552728080-b9693f7d2e44?w=1200&q=80",
+        "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=1200&q=80"
+      ],
+      "params": {
+        "学名": "Pyrrhura molinae",
+        "目": "鹦形目",
+        "科": "鹦鹉科",
+        "体长": "24～26cm",
+        "分布": "南美巴西、阿根廷、玻利维亚雨林"
+      },
+      "video": {
+        "bvid": "BV1qu41187WT"
+      },
+      "ring": 1,
+      "svg": "data/pic/green-cheek-conure.svg"
+    },
+    {
+      "id": "flamingo",
+      "name": "火烈鸟",
+      "alias": [
+        "红鹳"
+      ],
+      "category": "红鹳科",
+      "intro": "粉红色长腿涉禽，以独特的单腿站立姿态闻名。",
+      "description": "火烈鸟是一种大型涉禽，体长90-140厘米。它们拥有细长的脖颈、修长的双腿和独特的弯曲喙。火烈鸟羽毛的粉红色来自其食物中的类胡萝卜素，常成群栖息于咸水湖和潟湖。",
+      "image": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&q=80"
+      ],
+      "params": {
+        "学名": "Phoenicopteridae",
+        "目": "红鹳目",
+        "科": "红鹳科",
+        "体长": "90-140 cm",
+        "分布": "非洲、南美、南欧及南亚"
+      },
+      "video": {
+        "bvid": "BV1GJ411x7h7"
+      },
+      "ring": 2,
+      "svg": "data/pic/flamingo.svg"
+    },
+    {
+      "id": "owl",
+      "name": "猫头鹰",
+      "alias": [
+        "鸮",
+        "夜猫子"
+      ],
+      "category": "鸱鸮科",
+      "intro": "神秘的夜行猎手，拥有无声飞行与360度旋转的头部。",
+      "description": "猫头鹰是鸱鸮科的夜行性猛禽，全球约有200多种。它们拥有巨大的圆眼、敏锐的听觉和特殊的羽毛结构，可以实现近乎无声的飞行。猫头鹰的头部可以旋转270度，帮助它们在黑暗中定位猎物。",
+      "image": "https://images.unsplash.com/photo-1552728080-b9693f7d2e44?w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1552728080-b9693f7d2e44?w=1200&q=80",
+        "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=1200&q=80"
+      ],
+      "params": {
+        "学名": "Strigiformes",
+        "目": "鸮形目",
+        "科": "鸱鸮科",
+        "体长": "因种类而异",
+        "分布": "除南极外全球分布"
+      },
+      "video": {
+        "bvid": "BV1GJ411x7h7"
+      },
+      "ring": 2,
+      "svg": "data/pic/owl.svg"
+    },
+    {
+      "id": "peacock",
+      "name": "孔雀",
+      "alias": [
+        "蓝孔雀",
+        "印度孔雀"
+      ],
+      "category": "雉科",
+      "intro": "尾屏开展如扇的华丽珍禽，是美丽与骄傲的象征。",
+      "description": "孔雀是雉科孔雀属的大型鸟类，雄鸟以其绚丽夺目的尾屏著称。开屏时，尾羽上的眼状斑纹形成壮观的视觉展示，用于吸引雌鸟和威慑竞争者。",
+      "image": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&q=80",
+        "https://images.unsplash.com/photo-1548199973-dee93e7ddc45?w=1200&q=80"
+      ],
+      "params": {
+        "学名": "Pavo cristatus",
+        "目": "鸡形目",
+        "科": "雉科",
+        "体长": "100-230 cm（含尾羽）",
+        "分布": "南亚及世界各地引种"
+      },
+      "video": {
+        "bvid": "BV1GJ411x7h7"
+      },
+      "ring": 2,
+      "svg": "data/pic/peacock.svg"
+    },
+    {
+      "id": "penguin",
+      "name": "企鹅",
+      "alias": [
+        "帝企鹅",
+        "阿德利企鹅"
+      ],
+      "category": "企鹅科",
+      "intro": "南极的可爱居民，虽不能飞却在水中游泳如飞。",
+      "description": "企鹅是企鹅科的海鸟，主要分布于南半球，尤其是南极及周边海域。它们失去了飞行能力，却演化出卓越的游泳本领，时速可达35公里。",
+      "image": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&q=80"
+      ],
+      "params": {
+        "学名": "Spheniscidae",
+        "目": "企鹅目",
+        "科": "企鹅科",
+        "体长": "30-120 cm",
+        "分布": "南半球，主要南极地区"
+      },
+      "video": {
+        "bvid": "BV1GJ411x7h7"
+      },
+      "ring": 3,
+      "svg": "data/pic/penguin.svg"
+    },
+    {
+      "id": "crane",
+      "name": "丹顶鹤",
+      "alias": [
+        "仙鹤",
+        "满洲鹤"
+      ],
+      "category": "鹤科",
+      "intro": "头顶红冠、身姿挺拔的东方神鸟，寓意长寿与吉祥。",
+      "description": "丹顶鹤是鹤科的大型涉禽，体长约120-150厘米。它们全身洁白，翅膀和颈部为黑色，头顶有鲜红色的裸皮。丹顶鹤在中国文化中被誉为「仙鹤」，象征长寿、吉祥和高洁。",
+      "image": "https://images.unsplash.com/photo-1552728080-b9693f7d2e44?w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1552728080-b9693f7d2e44?w=1200&q=80",
+        "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=1200&q=80"
+      ],
+      "params": {
+        "学名": "Grus japonensis",
+        "目": "鹤形目",
+        "科": "鹤科",
+        "体长": "120-150 cm",
+        "分布": "东亚及西伯利亚东部"
+      },
+      "video": {
+        "bvid": "BV1GJ411x7h7"
+      },
+      "ring": 3,
+      "svg": "data/pic/crane.svg"
+    },
+    {
+      "id": "hummingbird",
+      "name": "蜂鸟",
+      "alias": [
+        "吸蜜鸟"
+      ],
+      "category": "蜂鸟科",
+      "intro": "世界上最小的鸟类之一，翅膀振动如蜂鸣，悬停采蜜。",
+      "description": "蜂鸟是蜂鸟科的小型鸟类，主要分布于美洲。它们体型极小，翅膀振动频率极高，可达每秒50-80次，因此能够悬停在空中采食花蜜。",
+      "image": "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=1200&q=80"
+      ],
+      "params": {
+        "学名": "Trochilidae",
+        "目": "蜂鸟目",
+        "科": "蜂鸟科",
+        "体长": "5-20 cm",
+        "分布": "美洲大陆"
+      },
+      "video": {
+        "bvid": "BV1GJ411x7h7"
+      },
+      "ring": 3,
+      "svg": "data/pic/hummingbird.svg"
+    },
+    {
+      "id": "woodpecker",
+      "name": "啄木鸟",
+      "alias": [
+        "红头啄木鸟"
+      ],
+      "category": "啄木鸟科",
+      "intro": "森林医生，以每秒数十次的频率敲击树干觅食。",
+      "description": "啄木鸟是啄木鸟科的鸟类，全球约有200多种。它们拥有坚硬的喙、缓冲震动的特殊头骨结构和带钩的舌头，专门用于在树干中凿洞寻找昆虫。",
+      "image": "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200&q=80"
+      ],
+      "params": {
+        "学名": "Picidae",
+        "目": "啄木鸟目",
+        "科": "啄木鸟科",
+        "体长": "因种类而异",
+        "分布": "除大洋洲和南极外全球分布"
+      },
+      "video": {
+        "bvid": "BV1GJ411x7h7"
+      },
+      "ring": 3,
+      "svg": "data/pic/woodpecker.svg"
+    }
+  ]
+}

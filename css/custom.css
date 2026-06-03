@@ -1,0 +1,130 @@
+/* ══════════════════════════════════════════════════════════
+   鸟类地球Online — 首页 BirdsCircle 环形区域样式
+   Drop = 纯 SVG 图片，无限层元素
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Ring Container：静态容器，自身不旋转 ── */
+.ring-container {
+  position: relative;
+  width: 520px;
+  height: 520px;
+  max-width: 90vw;
+  max-height: 90vw;
+}
+
+.ring-container.fixed-on-scroll {
+  position: fixed;
+  top: 50%;
+  right: 10%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+/* ── 每个 Ring 独立匀速自转 ── */
+.ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  transform-origin: 0 0;
+}
+.ring[data-ring="0"] { animation: ringSpin 24s linear infinite; }
+.ring[data-ring="1"] { animation: ringSpin 30s linear infinite; }
+.ring[data-ring="2"] { animation: ringSpin 36s linear infinite; }
+.ring[data-ring="3"] { animation: ringSpin 42s linear infinite; }
+
+.ring.paused { animation-play-state: paused; }
+
+@keyframes ringSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Drop = 纯 SVG 图片 ── */
+.drop {
+  position: absolute;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 2;
+  transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.drop-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 4px 12px rgba(28, 157, 228, 0.15));
+  transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+              filter  0.38s ease;
+}
+
+/* ── PC Hover：放大 + 高亮（scale 作用在 img，不覆盖 inline 定位） ── */
+@media (hover: hover) and (pointer: fine) {
+  .drop:hover {
+    z-index: 10;
+  }
+  .drop:hover .drop-img {
+    transform: scale(1.15);
+    filter: drop-shadow(0 8px 28px rgba(28, 157, 228, 0.4))
+            brightness(1.15);
+  }
+}
+
+/* ── 移动端 tap ── */
+.drop:active .drop-img {
+  transform: scale(1.15);
+}
+
+/* ── 预览弹窗 ── */
+.preview-modal-body { padding: 1.5rem; }
+.preview-modal-body img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 1rem;
+}
+/* 弹窗卡片鸟 SVG — 保留原始比例不裁切 */
+.preview-bird-img {
+  object-fit: contain !important;
+  background: rgba(28,157,228,0.04);
+}
+.preview-modal-body h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.4rem;
+  margin: 0 0 0.5rem;
+}
+.preview-modal-body p {
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.preview-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* ── 移动端适配 ── */
+@media (max-width: 768px) {
+  .ring-container {
+    width: min(85vw, 400px);
+    height: min(85vw, 400px);
+  }
+  .ring-container.fixed-on-scroll {
+    position: relative;
+    top: auto; right: auto;
+    transform: none;
+  }
+  .drop:hover { z-index: 2; }
+  .drop:hover .drop-img {
+    transform: none;
+    filter: drop-shadow(0 4px 12px rgba(28, 157, 228, 0.15));
+  }
+}
+
+@media (max-width: 480px) {
+  .ring-container {
+    width: min(80vw, 300px);
+    height: min(80vw, 300px);
+  }
+}

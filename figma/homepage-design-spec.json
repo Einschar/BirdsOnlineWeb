@@ -1,0 +1,304 @@
+{
+  "$schema": "birds-online-homepage-v1",
+  "meta": {
+    "name": "鸟类地球Online - 首页",
+    "sourceFiles": {
+      "html": "index.html",
+      "css": "css/styles.css",
+      "js": "js/index.js",
+      "note": "项目无 custom.css，首页样式在 css/styles.css 的「首页」区块"
+    },
+    "designViewport": {
+      "width": 1440,
+      "height": 900,
+      "description": "桌面基准稿，对应 max-width 1280 内容区居中"
+    },
+    "figmaFrameName": "首页 / Homepage — Desktop 1440",
+    "editableRegion": "hero-ring-area",
+    "editableRegionNote": "请在 Figma 中主要修改右侧「水滴环形」区域，改完后选中 Frame 让我读取并回写代码"
+  },
+  "designTokens": {
+    "colors": {
+      "background": { "hex": "#FFFFFF", "figma": { "r": 1, "g": 1, "b": 1 } },
+      "mint": { "hex": "#84DB5D", "figma": { "r": 0.518, "g": 0.859, "b": 0.365 } },
+      "sky": { "hex": "#1C9DE4", "figma": { "r": 0.11, "g": 0.616, "b": 0.894 } },
+      "textPrimary": { "hex": "#222222", "figma": { "r": 0.133, "g": 0.133, "b": 0.133 } },
+      "textSecondary": { "hex": "#777777", "figma": { "r": 0.467, "g": 0.467, "b": 0.467 } },
+      "textMuted": { "hex": "#555555", "figma": { "r": 0.333, "g": 0.333, "b": 0.333 } },
+      "searchIcon": { "hex": "#999999", "figma": { "r": 0.6, "g": 0.6, "b": 0.6 } },
+      "dropGradientStart": { "hex": "rgba(132,219,93,0.15)", "figma": { "r": 0.518, "g": 0.859, "b": 0.365, "opacity": 0.15 } },
+      "dropGradientEnd": { "hex": "rgba(28,157,228,0.15)", "figma": { "r": 0.11, "g": 0.616, "b": 0.894, "opacity": 0.15 } },
+      "navbarScrolledBg": { "hex": "rgba(255,255,255,0.85)", "figma": { "r": 1, "g": 1, "b": 1, "opacity": 0.85 } }
+    },
+    "typography": {
+      "display": {
+        "family": "Outfit",
+        "weights": [600, 700],
+        "fallback": "Nunito"
+      },
+      "body": {
+        "family": "Nunito",
+        "weights": [400, 600, 700]
+      },
+      "styles": {
+        "logo": { "font": "Outfit Bold", "size": 20, "lineHeight": 24, "color": "textPrimary" },
+        "heroTitle": { "font": "Outfit Bold", "size": 56, "lineHeight": 67.2, "color": "textPrimary" },
+        "heroBody": { "font": "Nunito Regular", "size": 17.6, "lineHeight": 29.9, "color": "textSecondary", "maxWidth": 360 },
+        "navLink": { "font": "Nunito Regular", "size": 14.4, "color": "textMuted" },
+        "searchInput": { "font": "Nunito Regular", "size": 14.4, "color": "textPrimary" },
+        "btnPrimary": { "font": "Nunito SemiBold", "size": 15.2, "color": "#FFFFFF" },
+        "dropEmoji": { "size": 22.4 }
+      }
+    },
+    "spacing": {
+      "navbarPaddingY": 16,
+      "navbarPaddingX": 32,
+      "contentMaxWidth": 1280,
+      "heroPaddingTop": 96,
+      "heroPaddingX": 32,
+      "heroGap": 32,
+      "heroTextToButton": 24,
+      "titleUnderlineGap": 12,
+      "navActionsGap": 16,
+      "logoIconGap": 8
+    },
+    "radii": {
+      "pill": 999,
+      "logoIcon": 16,
+      "btnPrimary": 999,
+      "searchInput": 999,
+      "dropInner": "50% 50% 50% 5%",
+      "modal": 24
+    },
+    "shadows": {
+      "soft": {
+        "css": "0 8px 32px rgba(0,0,0,0.06)",
+        "figma": [{ "type": "DROP_SHADOW", "color": { "r": 0, "g": 0, "b": 0, "a": 0.06 }, "offset": { "x": 0, "y": 8 }, "radius": 32, "spread": 0 }]
+      },
+      "hover": {
+        "css": "0 16px 48px rgba(28,157,228,0.12)",
+        "figma": [{ "type": "DROP_SHADOW", "color": { "r": 0.11, "g": 0.616, "b": 0.894, "a": 0.12 }, "offset": { "x": 0, "y": 16 }, "radius": 48, "spread": 0 }]
+      }
+    },
+    "motion": {
+      "easeBounce": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+      "easeSoft": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+      "ringRotationDuration": "60s linear infinite"
+    }
+  },
+  "layout": {
+    "navbar": {
+      "type": "FRAME",
+      "name": "Navbar",
+      "position": { "x": 0, "y": 0 },
+      "size": { "width": 1440, "height": 72 },
+      "padding": { "top": 16, "right": 32, "bottom": 16, "left": 32 },
+      "layoutMode": "HORIZONTAL",
+      "primaryAxisAlignItems": "CENTER",
+      "counterAxisAlignItems": "CENTER",
+      "primaryAxisSizingMode": "FIXED",
+      "counterAxisSizingMode": "AUTO",
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "Logo",
+          "layoutMode": "HORIZONTAL",
+          "itemSpacing": 8,
+          "children": [
+            {
+              "type": "ELLIPSE",
+              "name": "Logo Icon",
+              "size": { "width": 32, "height": 32 },
+              "fill": "linear-gradient(135deg, #84DB5D → #1C9DE4)",
+              "content": "🐦"
+            },
+            {
+              "type": "TEXT",
+              "name": "Logo Text",
+              "characters": "鸟类地球Online",
+              "style": "logo"
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "Nav Actions",
+          "layoutMode": "HORIZONTAL",
+          "itemSpacing": 16,
+          "children": [
+            {
+              "type": "FRAME",
+              "name": "Search Box",
+              "size": { "width": 220, "height": 40 },
+              "cornerRadius": 999,
+              "fill": "rgba(255,255,255,0.9)",
+              "effects": "soft",
+              "paddingLeft": 40,
+              "children": [
+                { "type": "TEXT", "name": "Search Placeholder", "characters": "搜索鸟类...", "style": "searchInput" }
+              ]
+            },
+            {
+              "type": "TEXT",
+              "name": "About Link",
+              "characters": "关于我们",
+              "style": "navLink",
+              "padding": { "vertical": 8, "horizontal": 16 },
+              "cornerRadius": 999
+            }
+          ]
+        }
+      ]
+    },
+    "hero": {
+      "type": "FRAME",
+      "name": "Hero Section",
+      "position": { "x": 0, "y": 0 },
+      "size": { "width": 1440, "height": 900 },
+      "minHeight": "100vh",
+      "padding": { "top": 96, "right": 32, "bottom": 32, "left": 32 },
+      "layoutMode": "HORIZONTAL",
+      "primaryAxisAlignItems": "CENTER",
+      "itemSpacing": 32,
+      "contentMaxWidth": 1280,
+      "contentOffsetX": 80,
+      "flexRatio": "1:2",
+      "children": [
+        {
+          "type": "FRAME",
+          "name": "Hero Text (1/3)",
+          "flex": 1,
+          "approxWidth": 416,
+          "children": [
+            {
+              "type": "TEXT",
+              "name": "Hero Title",
+              "characters": "鸟类地球\nOnline",
+              "style": "heroTitle",
+              "decoration": {
+                "type": "underline",
+                "width": 60,
+                "height": 4,
+                "color": "mint",
+                "borderRadius": 2,
+                "marginTop": 12
+              }
+            },
+            {
+              "type": "TEXT",
+              "name": "Hero Description",
+              "characters": "点击右侧环形中的水滴，探索天空与大地上的飞羽朋友。每一颗水滴，都是一段自然故事。",
+              "style": "heroBody",
+              "marginTop": 16
+            },
+            {
+              "type": "FRAME",
+              "name": "CTA Button",
+              "characters": "查看全部图鉴",
+              "style": "btnPrimary",
+              "size": { "height": 44 },
+              "padding": { "vertical": 12, "horizontal": 24 },
+              "fill": "linear-gradient(135deg, #84DB5D → #1C9DE4)",
+              "cornerRadius": 999,
+              "effects": "soft",
+              "marginTop": 24
+            }
+          ]
+        },
+        {
+          "type": "FRAME",
+          "name": "Hero Ring Area (2/3) — 可编辑区",
+          "flex": 2,
+          "approxWidth": 832,
+          "size": { "width": 832, "height": 600 },
+          "layoutMode": "NONE",
+          "alignItems": "CENTER",
+          "justifyContent": "CENTER",
+          "children": [
+            {
+              "type": "FRAME",
+              "name": "Ring Container",
+              "size": { "width": 520, "height": 520 },
+              "positionInParent": "center",
+              "note": "4 圈水滴环形，JS 动态生成；Figma 中请在此 Frame 内编辑",
+              "ringConfig": {
+                "ringCount": 4,
+                "ringRadiiRatio": [0.18, 0.3, 0.42, 0.54],
+                "ringRadiiPx": [93.6, 156, 218.4, 280.8],
+                "dropSize": { "width": 44, "height": 44 },
+                "dropBorderRadius": "50% 50% 50% 5%",
+                "dropFill": "linear-gradient(135deg, rgba(132,219,93,0.15), rgba(28,157,228,0.15))",
+                "dropShadow": "soft",
+                "hoverScale": 1.5,
+                "animation": "ringRotate 60s linear infinite"
+              },
+              "rings": [
+                {
+                  "ringIndex": 0,
+                  "radiusPx": 93.6,
+                  "drops": [
+                    { "id": "magpie", "name": "喜鹊", "emoji": "🐦", "angleDeg": -90, "x": 0, "y": -93.6, "rotationDeg": 0 },
+                    { "id": "kingfisher", "name": "翠鸟", "emoji": "💎", "angleDeg": 90, "x": 0, "y": 93.6, "rotationDeg": 180 }
+                  ]
+                },
+                {
+                  "ringIndex": 1,
+                  "radiusPx": 156,
+                  "drops": [
+                    { "id": "swan", "name": "天鹅", "emoji": "🦢", "angleDeg": -90, "x": 0, "y": -156, "rotationDeg": 0 },
+                    { "id": "eagle", "name": "金雕", "emoji": "🦅", "angleDeg": 30, "x": 135.1, "y": -78, "rotationDeg": 120 },
+                    { "id": "parrot", "name": "鹦鹉", "emoji": "🦜", "angleDeg": 150, "x": -135.1, "y": -78, "rotationDeg": 240 }
+                  ]
+                },
+                {
+                  "ringIndex": 2,
+                  "radiusPx": 218.4,
+                  "drops": [
+                    { "id": "flamingo", "name": "火烈鸟", "emoji": "🦩", "angleDeg": -90, "x": 0, "y": -218.4, "rotationDeg": 0 },
+                    { "id": "owl", "name": "猫头鹰", "emoji": "🦉", "angleDeg": 30, "x": 189.1, "y": -109.2, "rotationDeg": 120 },
+                    { "id": "peacock", "name": "孔雀", "emoji": "🦚", "angleDeg": 150, "x": -189.1, "y": -109.2, "rotationDeg": 240 }
+                  ]
+                },
+                {
+                  "ringIndex": 3,
+                  "radiusPx": 280.8,
+                  "drops": [
+                    { "id": "penguin", "name": "企鹅", "emoji": "🐧", "angleDeg": -90, "x": 0, "y": -280.8, "rotationDeg": 0 },
+                    { "id": "crane", "name": "丹顶鹤", "emoji": "🕊️", "angleDeg": 0, "x": 280.8, "y": 0, "rotationDeg": 90 },
+                    { "id": "hummingbird", "name": "蜂鸟", "emoji": "🐤", "angleDeg": 90, "x": 0, "y": 280.8, "rotationDeg": 180 },
+                    { "id": "woodpecker", "name": "啄木鸟", "emoji": "🪶", "angleDeg": 180, "x": -280.8, "y": 0, "rotationDeg": 270 }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "componentMap": {
+    "cssToFigmaLayer": {
+      ".navbar": "Navbar",
+      ".logo": "Logo",
+      ".logo-icon": "Logo Icon",
+      ".search-input": "Search Box",
+      ".nav-link.about-btn": "About Link",
+      ".hero": "Hero Section",
+      ".hero-text": "Hero Text (1/3)",
+      ".hero-text h1": "Hero Title",
+      ".hero-text p": "Hero Description",
+      ".btn-primary": "CTA Button",
+      ".hero-ring-area": "Hero Ring Area (2/3) — 可编辑区",
+      "#ring-container": "Ring Container",
+      ".ring": "Ring {index}",
+      ".drop": "Drop / {birdId}",
+      ".drop-inner": "Drop Shape"
+    }
+  },
+  "workflow": {
+    "step1": "在 Figma 打开文件，运行 Cursor Figma 插件或使用 figma/import-to-figma.js 脚本导入",
+    "step2": "主要编辑「Hero Ring Area」和「Ring Container」内的水滴环形",
+    "step3": "改完后选中整个「首页 / Homepage — Desktop 1440」Frame",
+    "step4": "在 Cursor 中让我 join_channel 并 read_my_design，我会按新稿更新 index.html 和 css/styles.css"
+  }
+}
