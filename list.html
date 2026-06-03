@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鸟类图鉴 - 鸟类地球Online</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- 通用导航栏 -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">🐦</span>
+        鸟类地球Online
+      </a>
+      <div class="nav-actions">
+        <form class="search-form search-box">
+          <span class="search-icon">🔍</span>
+          <input type="search" class="search-input" placeholder="搜索鸟类..." aria-label="搜索鸟类">
+        </form>
+        <button class="nav-link about-btn">关于我们</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 图鉴卡片页 -->
+  <main class="list-page">
+    <header class="list-header fade-in">
+      <h1 class="font-display">鸟类图鉴</h1>
+      <p id="list-subtitle">共收录多种常见鸟类，点击卡片查看详情</p>
+    </header>
+
+    <!-- 自适应网格卡片，由 list.js 渲染 -->
+    <div id="bird-grid" class="bird-grid"></div>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/list.js"></script>
+</body>
+</html>
