@@ -10,7 +10,5 @@
 
 
 
-\# 网站演示预览
-
-!\[网站演示动图](./DemoPreview/demo-v2.0.gif)
+![网站演示动图](./DemoPreview/demo-v2.0.gif)
 
