@@ -1,0 +1,139 @@
+<!--
+  作用：文章详情页（PRD 第 7 章）- 全站可复用文章阅读模板
+  - 使用 ArticleLayout 沉浸式布局（无顶部导航，PRD 第 7.1 章）
+  - PC 端左右双栏：左侧抽屉目录 + 右侧文章内容
+  - 移动端单栏流式布局，目录收纳为顶部抽屉按钮
+  - 渲染 Markdown 内容，支持 6 种内容模块组件
+  - 底部包含相关推荐
+
+  关联文件：
+  - src/layouts/ArticleLayout.astro（沉浸式布局，无顶部导航）
+  - src/components/article/ArticleHeader.astro（文章头部信息）
+  - src/components/article/ArticleTOC.astro（抽屉式目录导航）
+  - src/components/article/RelatedArticles.astro（底部相关推荐）
+  - src/components/common/BackToTop.astro（返回顶部）
+  - src/components/article/ContentText.astro（文字模块全局样式）
+  - src/content.config.ts（内容集合定义）
+  - src/utils/constants.ts（getTopicBySlug 获取专题信息）
+
+  路由规则：
+  - [...slug] 捕获路径：/article/专题名/文章ID
+  - 例如：/article/yangniaorichang/rumenbikan-01
+
+  数据流：
+  - Astro.params.slug → [collectionName, articleId] → getCollection(collectionName) → 匹配 id
+  - getTopicBySlug → 获取专题元信息（面包屑、分类名）
+-->
+
+---
+import { getCollection, render } from 'astro:content';
+import { getTopicBySlug } from '../../utils/constants';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import ArticleHeader from '../../components/article/ArticleHeader.astro';
+import ArticleTOC from '../../components/article/ArticleTOC.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import BackToTop from '../../components/common/BackToTop.astro';
+
+/**
+ * 作用：getStaticPaths - 为静态生成的动态路由提供所有可能的路径
+ * - 遍历四大内容集合，为每篇文章生成一个路径
+ * - Astro 构建时调用此函数，为每个路径预渲染 HTML
+ */
+export async function getStaticPaths() {
+  const paths: Array<{ params: { slug: string } }> = [];
+
+  // 分别从四个内容集合获取文章，使用字面量字符串确保类型正确
+  const collections = [
+    { name: 'yangniaorichang' as const, articles: await getCollection('yangniaorichang') },
+    { name: 'guanniaozhinan' as const, articles: await getCollection('guanniaozhinan') },
+    { name: 'niaoleijiuzhu' as const, articles: await getCollection('niaoleijiuzhu') },
+    { name: 'niaoleibaohu' as const, articles: await getCollection('niaoleibaohu') },
+  ];
+
+  for (const col of collections) {
+    for (const article of col.articles) {
+      if (!article.data.draft) {
+        paths.push({
+          params: { slug: `${col.name}/${article.id}` },
+        });
+      }
+    }
+  }
+
+  return paths;
+}
+
+// 处理动态路由参数
+const slugParts = Astro.params.slug?.split('/') || [];
+const [collectionName, ...articleIdParts] = slugParts;
+const articleId = articleIdParts.join('/');
+
+// 验证 collectionName 是否有效
+const validCollections = ['yangniaorichang', 'guanniaozhinan', 'niaoleijiuzhu', 'niaoleibaohu'];
+if (!collectionName || !validCollections.includes(collectionName)) {
+  return new Response(null, { status: 404, statusText: '专题不存在' });
+}
+
+// 获取文章数据
+const articles = await getCollection(collectionName as any);
+const article = articles.find((a) => a.id === articleId);
+
+if (!article) {
+  return new Response(null, { status: 404, statusText: '文章未找到' });
+}
+
+const topic = getTopicBySlug(collectionName);
+const { title, summary, tags = [], publishDate } = article.data;
+
+/**
+ * 作用：使用 render() 将 Markdown 正文渲染为 HTML
+ * - Astro 6 glob loader 中，article.body 是原始 markdown 字符串
+ * - render() 返回 { Content } 组件，渲染为 HTML
+ * - 使用类型断言绕过不同集合的类型不兼容问题
+ */
+const { Content } = await render(article as any);
+---
+
+<ArticleLayout
+  title={title}
+  description={summary}
+  categorySlug={collectionName}
+  categoryName={topic?.name || collectionName}
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- 文章头部信息（标题、简介、标签） -->
+    <ArticleHeader title={title} summary={summary} tags={tags} publishDate={publishDate} />
+
+    <!-- PC 端左右双栏布局 | 移动端单栏 -->
+    <div class="flex flex-col lg:flex-row gap-8">
+      <!-- 左侧：抽屉式目录导航（PC 常驻，移动端顶部按钮） -->
+      <aside class="w-full lg:w-56 shrink-0">
+        <div class="lg:sticky lg:top-8">
+          <ArticleTOC />
+        </div>
+      </aside>
+
+      <!-- 右侧：文章主内容区 -->
+      <div class="flex-1 min-w-0">
+        <div class="prose-custom article-content bg-white rounded-card p-6 lg:p-10">
+          <Content />
+        </div>
+
+        <!-- 数据注入：供搜索和其他客户端功能使用 -->
+        <div
+          data-search-index
+          data-search-title={title}
+          data-search-tags={tags.join(',')}
+          data-search-summary={summary}
+          data-search-href={`/article/${collectionName}/${articleId}`}
+          class="hidden"
+        ></div>
+
+        <!-- 底部相关推荐 -->
+        <RelatedArticles category={collectionName} currentId={articleId} />
+      </div>
+    </div>
+  </div>
+
+  <BackToTop />
+</ArticleLayout>

@@ -1,0 +1,61 @@
+<!--
+  作用：文章头部信息组件（PRD 第 7.3 章第 2 条）
+  - 展示文章主标题、一句话简介、检索分类标签
+  - 全站所有文章页统一使用，样式全局统一
+  - 禁止单篇文章定制样式（PRD 第 17.3 章）
+
+  关联文件：
+  - src/pages/article/[...slug].astro（文章页使用）
+
+  Props:
+  - title: 文章标题
+  - summary: 一句话简介
+  - tags: 标签数组
+  - publishDate: 发布日期
+-->
+
+---
+interface Props {
+  title: string;
+  summary: string;
+  tags: string[];
+  publishDate: Date;
+}
+
+const { title, summary, tags, publishDate } = Astro.props;
+---
+
+<header class="mb-12 text-center">
+  <!-- 文章主标题 -->
+  <h1 class="font-display text-3xl lg:text-4xl font-extrabold text-neutral-text-heading mb-4 leading-tight">
+    {title}
+    <span class="section-underline" style="margin: 0.5rem auto 0;"></span>
+  </h1>
+
+  <!-- 一句话简介 -->
+  <p class="text-lg text-neutral-text-secondary max-w-2xl mx-auto mb-6 leading-relaxed">
+    {summary}
+  </p>
+
+  <!-- 标签 + 发布日期 -->
+  <div class="flex flex-wrap items-center justify-center gap-3">
+    <!-- 检索分类标签 -->
+    {tags.length > 0 && (
+      <div class="flex flex-wrap justify-center gap-2">
+        {tags.map((tag: string) => (
+          <span class="px-3 py-1 text-xs font-medium rounded-full border border-brand-green/30 text-brand-green-dark">
+            #{tag}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <!-- 发布日期 -->
+    <time
+      datetime={publishDate.toISOString()}
+      class="text-sm text-neutral-text-secondary"
+    >
+      发布于 {publishDate.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
+    </time>
+  </div>
+</header>

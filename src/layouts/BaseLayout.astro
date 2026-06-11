@@ -1,0 +1,66 @@
+<!--
+  作用：全站全局布局组件（有顶部导航版本）
+  - 包含 HTML shell、meta 标签、字体加载
+  - 引入全局样式 global.css
+  - 包含顶部常驻导航栏 NavBar
+  - 包含页脚 Footer
+  - 通过 <slot /> 插入各页面的主体内容
+
+  关联文件：
+  - src/styles/global.css（全局样式）
+  - src/components/global/NavBar.astro（顶部导航）
+  - src/components/global/Footer.astro（页脚）
+  - src/pages/index.astro（首页使用此布局）
+  - src/pages/category/[slug].astro（分类页使用此布局）
+
+  注意：文章详情页不使用此布局，而是使用 ArticleLayout.astro（无顶部导航版）
+-->
+
+---
+import '../styles/global.css';
+import NavBar from '../components/global/NavBar.astro';
+import Footer from '../components/global/Footer.astro';
+
+interface Props {
+  /** 页面标题，用于 <title> 标签和 SEO */
+  title?: string;
+  /** 页面描述，用于 meta description */
+  description?: string;
+}
+
+const { title = '鸟类科普网 - 探索羽翼世界', description = '专注鸟类科普，探索羽翼世界的奇妙。覆盖养鸟日常、观鸟指南、鸟类救助、鸟类保护四大专题。' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+
+    <title>{title}</title>
+
+    <!-- TODO: 替换为实际 favicon 资源 -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- 字体加载：Outfit（标题展示）+ Nunito（正文），对齐参考项目 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Nunito:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen flex flex-col bg-white">
+    <!-- 顶部常驻导航栏 -->
+    <NavBar />
+
+    <!-- 页面主体内容 -->
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <!-- 页脚 -->
+    <Footer />
+  </body>
+</html>

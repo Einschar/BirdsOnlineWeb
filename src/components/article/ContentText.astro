@@ -1,0 +1,81 @@
+<!--
+  作用：文字内容模块（PRD 第 8.1 章）
+  - 渲染文章正文段落
+  - 支持加粗高亮关键词（**关键词** 语法 → 品牌绿高亮）
+  - 正文字号、行高、段间距全局统一
+  - 重点词汇以主色品牌绿高亮显示，不使用粗黑刺眼样式
+
+  关联文件：
+  - src/pages/article/[...slug].astro（文章页 markdown 正文渲染）
+  - src/styles/global.css（品牌绿色值定义）
+
+  使用方式（Markdown）：
+  普通段落文字……其中 **关键词** 会被高亮为品牌绿色。
+
+  渲染结果：
+  <p>普通段落文字……其中 <strong class="text-brand-green">关键词</strong> 会被高亮为品牌绿色。</p>
+-->
+
+<div class="article-content">
+  <slot />
+</div>
+
+<!--
+  作用：全局样式，覆盖 markdown 渲染的默认样式
+  确保所有文章正文排版统一，禁止单篇文章定制
+-->
+<style is:global>
+  .article-content {
+    /* 正文字号、行高、段间距全局统一（PRD 第 8.1 章） */
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    color: var(--color-neutral-text-body);
+  }
+
+  .article-content p {
+    margin-bottom: 1.25em;
+  }
+
+  /* 关键词高亮：品牌绿，不加粗（PRD 第 11.4 章） */
+  .article-content strong {
+    color: var(--color-brand-green-dark);
+    font-weight: 600;
+  }
+
+  /* 标题在文章内的样式 */
+  .article-content h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-neutral-text-heading);
+    margin-top: 2.5em;
+    margin-bottom: 0.75em;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid var(--color-neutral-divider);
+  }
+
+  .article-content h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-neutral-text-heading);
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+  }
+
+  /* 行内链接 */
+  .article-content a {
+    color: var(--color-brand-green-dark);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .article-content a:hover {
+    color: var(--color-brand-green);
+  }
+
+  /* 水平分割线 */
+  .article-content hr {
+    margin: 2em 0;
+    border: none;
+    height: 1px;
+    background: var(--color-neutral-divider);
+  }
+</style>

@@ -1,0 +1,69 @@
+<!--
+  作用：文章详情页沉浸式布局组件（无顶部导航版）
+  - 与 BaseLayout 的区别：不包含顶部常驻导航栏 NavBar
+  - 最大化阅读沉浸感，无多余干扰元素（PRD 第 7.1 章）
+  - 包含面包屑导航 + 文章主体 + 页脚
+
+  关联文件：
+  - src/pages/article/[...slug].astro（使用此布局）
+  - src/components/global/Breadcrumb.astro（面包屑导航）
+  - src/components/global/Footer.astro（页脚）
+  - src/styles/global.css（全局样式）
+-->
+
+---
+import '../styles/global.css';
+import Breadcrumb from '../components/global/Breadcrumb.astro';
+import Footer from '../components/global/Footer.astro';
+
+interface Props {
+  /** 文章标题，用于 <title> 和 SEO */
+  title: string;
+  /** 文章简介，用于 meta description */
+  description: string;
+  /** 所属分类 slug，面包屑用 */
+  categorySlug: string;
+  /** 所属分类名称，面包屑用 */
+  categoryName: string;
+}
+
+const { title, description, categorySlug, categoryName } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+
+    <title>{title} - 鸟类科普网</title>
+
+    <!-- TODO: 替换为实际 favicon 资源 -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- 字体加载：Outfit + Nunito，对齐参考项目 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Nunito:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen flex flex-col bg-white">
+    <!-- 面包屑导航（文章页无顶部导航，用面包屑替代路径提示） -->
+    <Breadcrumb
+      categorySlug={categorySlug}
+      categoryName={categoryName}
+      articleTitle={title}
+    />
+
+    <!-- 文章主体内容 -->
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <!-- 页脚 -->
+    <Footer />
+  </body>
+</html>

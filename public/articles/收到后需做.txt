@@ -1,0 +1,4 @@
+1. 把 .md 文件放入 src/content/对应专题/
+2. 把配图放入 public/images/对应专题/
+3. git add . && git commit -m "新增文章：XXX" && git push
+4. Vercel 自动构建上线（约 1 分钟）

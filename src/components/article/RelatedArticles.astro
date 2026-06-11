@@ -1,0 +1,49 @@
+<!--
+  作用：文章底部相关推荐组件（PRD 第 7.3 章第 4 条）
+  - 展示同一专题下的其他文章，引导用户持续探索
+  - 排除当前文章，推荐 3 篇相关内容
+
+  关联文件：
+  - src/pages/article/[...slug].astro（文章页底部使用）
+  - src/utils/content.ts（getRelatedArticles 函数）
+
+  Props:
+  - category: 当前文章所属专题分类
+  - currentId: 当前文章 ID（用于排除）
+-->
+
+---
+import { getRelatedArticles } from '../../utils/content';
+
+interface Props {
+  category: string;
+  currentId: string;
+}
+
+const { category, currentId } = Astro.props;
+const relatedArticles = await getRelatedArticles(category, currentId, 3);
+---
+
+{relatedArticles.length > 0 && (
+  <section class="mt-16 pt-8 border-t border-neutral-divider">
+    <h2 class="text-xl font-bold text-neutral-text-heading mb-6">
+      相关推荐
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {relatedArticles.map((article) => (
+        <a
+          href={`/article/${article.collection}/${article.id}`}
+          class="group block p-5 rounded-card bg-white border border-neutral-divider shadow-card card-hover"
+        >
+          <h3 class="text-base font-bold text-neutral-text-heading group-hover:text-brand-green-dark transition-colors mb-2 line-clamp-2">
+            {article.data.title}
+          </h3>
+          <p class="text-xs text-neutral-text-secondary line-clamp-2">
+            {article.data.summary}
+          </p>
+        </a>
+      ))}
+    </div>
+  </section>
+)}

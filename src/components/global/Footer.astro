@@ -1,0 +1,27 @@
+<!--
+  作用：全站通用页脚组件
+  - 简单的版权信息和底部标识
+  - 所有页面（首页、分类页、文章页）统一使用
+
+  关联文件：
+  - src/layouts/BaseLayout.astro（有导航页面使用）
+  - src/layouts/ArticleLayout.astro（文章沉浸式页面使用）
+-->
+
+<footer class="bg-white border-t border-neutral-divider/50 mt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <!-- 版权信息 -->
+      <div class="text-sm text-neutral-text-secondary">
+        <p>&copy; {new Date().getFullYear()} 鸟类科普网 Birds2Online. All rights reserved.</p>
+      </div>
+
+      <!-- 简化链接 -->
+      <div class="flex items-center gap-4 text-sm text-neutral-text-secondary">
+        <a href="/" class="hover:text-brand-green-dark transition-colors">首页</a>
+        <!-- TODO: 添加关于页面后启用 -->
+        <!-- <a href="/about" class="hover:text-brand-green-dark transition-colors">关于我们</a> -->
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- TODO: 替换为实际鸟类救助专题插画 -->
+  <rect width="200" height="200" rx="20" fill="#FFF9E6"/>
+  <text x="100" y="110" text-anchor="middle" font-size="64">🆘</text>
+  <text x="100" y="155" text-anchor="middle" font-size="16" fill="#F5C842" font-family="sans-serif">鸟类救助</text>
+</svg>

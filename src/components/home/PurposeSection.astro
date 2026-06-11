@@ -1,0 +1,144 @@
+<!--
+  作用：首页第二板块 - 目的性检索内容区（PRD 第 5.2 章）
+  - 面向有明确需求的用户，支持快速预览、切换、进入四大专题
+  - 布局：左侧可变信息介绍区 + 右侧四张专题卡片
+  - 核心联动逻辑：
+    - 鼠标 hover 右侧卡片 → 当前卡片高亮，其余三张灰度弱化
+    - 左侧信息区实时同步更新（标题、简介、按钮）
+    - 点击卡片或按钮 → 跳转对应分类页
+
+  关联文件：
+  - src/components/home/TopicCard.astro（单张专题卡片子组件）
+  - src/utils/constants.ts（TOPICS 数据源）
+  - src/pages/index.astro（首页引入）
+
+  数据流：
+  - TOPICS 常量 → 渲染 4 张卡片 + 初始化左侧默认信息
+  - 用户 hover → JS 联动切换左侧信息 + 卡片灰度效果
+-->
+
+---
+import { TOPICS } from '../../utils/constants';
+import TopicCard from './TopicCard.astro';
+---
+
+<section
+  class="py-20 bg-white"
+  id="purpose-section"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- 板块标题 -->
+    <div class="text-center mb-12">
+      <h2 class="font-display text-3xl font-bold text-neutral-text-heading mb-3">专题探索</h2>
+      <span class="section-underline mx-auto"></span>
+      <p class="text-neutral-text-secondary max-w-2xl mx-auto">
+        四大核心专题，覆盖鸟类科普全部刚需场景。将鼠标悬停在卡片上，快速预览各专题内容。
+      </p>
+    </div>
+
+    <!-- 左右自适应可变布局 -->
+    <div class="flex flex-col lg:flex-row gap-8 items-start">
+      <!--
+        左侧：可变信息介绍区（PRD 第 5.2.1 章）
+        作用：跟随右侧卡片 hover 实时更新内容
+      -->
+      <div
+        class="w-full lg:w-80 shrink-0 p-8 rounded-card bg-white border border-neutral-divider shadow-card sticky top-24"
+        id="topic-info-panel"
+      >
+        <p class="text-xs text-neutral-text-secondary mb-2 uppercase tracking-wide">
+          网站交互介绍
+        </p>
+        <!-- 动态更新的专题标题 -->
+        <h3
+          class="text-2xl font-bold text-neutral-text-heading mb-3"
+          id="topic-info-title"
+        >
+          {TOPICS[0]!.name}
+        </h3>
+        <!-- 动态更新的专题简介 -->
+        <p
+          class="text-sm text-neutral-text-body leading-relaxed mb-6"
+          id="topic-info-desc"
+        >
+          {TOPICS[0]!.longIntro}
+        </p>
+      </div>
+
+      <!--
+        右侧：四大专题无框插画卡片区（PRD 第 5.2.1 章）
+        作用：承载四张专题卡片，hover 触发联动
+      -->
+      <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full" id="topic-cards-grid">
+        {TOPICS.map((topic, i) => (
+          <TopicCard topic={topic} index={i} />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--
+  作用：专题联动交互脚本（PRD 第 13.2 章）
+  - 监听卡片 hover（mouseenter/mouseleave）
+  - hover 时：当前卡片高亮 + 其余灰度弱化 + 左侧面板更新
+  - mouseleave 时：恢复默认状态（第一个专题）
+  - 移动端降级：不使用 hover，直接显示全部卡片不灰度
+
+  依赖关系：
+  - 依赖 TOPICS 数据（与服务端常量同步）
+  - 依赖 HTML 结构：卡片 data-topic-index, 面板元素 ID
+-->
+<script>
+  const TOPICS_DATA = [
+    { name: '养鸟日常', longIntro: '从新手入门到资深养护，覆盖宠物鸟日常饲养、疾病预防、繁殖管理等全方位知识。帮你科学养鸟，给鸟儿一个健康幸福的家。', slug: 'yangniaorichang' },
+    { name: '观鸟指南', longIntro: '学习正确的观鸟方式，了解观鸟礼仪与规范。带你走进鸟类世界，在不打扰它们的前提下，享受观察与发现的乐趣。', slug: 'guanniaozhinan' },
+    { name: '鸟类救助', longIntro: '偶遇受伤野鸟时的标准化救助流程，从观察评估到安全转运。掌握正确的急救知识，在关键时刻为鸟儿争取生存机会。', slug: 'niaoleijiuzhu' },
+    { name: '鸟类保护', longIntro: '了解鸟类面临的威胁——栖息地破坏、非法捕猎、环境污染等。学习如何参与鸟类保护行动，为生物多样性贡献力量。', slug: 'niaoleibaohu' },
+  ];
+
+  function initTopicLinkage() {
+    const cards = document.querySelectorAll('.topic-card');
+    const titleEl = document.getElementById('topic-info-title');
+    const descEl = document.getElementById('topic-info-desc');
+    const btnEl = document.getElementById('topic-info-btn');
+    if (!cards.length || !titleEl || !descEl) return;
+
+    const defaultIndex = 0;
+
+    function updatePanel(index: number) {
+      const t = TOPICS_DATA[index];
+      if (!t) return;
+      titleEl!.textContent = t.name;
+      descEl!.textContent = t.longIntro;
+      btnEl?.setAttribute('href', `/category/${t.slug}`);
+    }
+
+    function resetToDefault() {
+      updatePanel(defaultIndex);
+      cards.forEach((c) => c.classList.remove('dimmed'));
+    }
+
+    cards.forEach((card) => {
+      // PC 端 hover 联动（仅在有 hover 能力的设备上生效）
+      card.addEventListener('mouseenter', () => {
+        const idx = parseInt(card.getAttribute('data-topic-index') || '0');
+        updatePanel(idx);
+        // 当前高亮，其余灰度弱化
+        cards.forEach((c) => {
+          if (c !== card) {
+            c.classList.add('dimmed');
+          } else {
+            c.classList.remove('dimmed');
+          }
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        resetToDefault();
+      });
+    });
+  }
+
+  initTopicLinkage();
+</script>

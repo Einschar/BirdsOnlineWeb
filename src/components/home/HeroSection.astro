@@ -1,0 +1,89 @@
+<!--
+  作用：首页首屏 Hero 选择区（PRD 第 5.1 章）
+  - 核心作用：引导用户选择浏览方式，完成两类用户体验分流
+  - PC 端：左右分栏布局 —— 左侧网站信息介绍区，右侧双无框功能卡片
+  - 移动端：上下流式布局
+  - 卡片 1（主入口/高优）：进入专题 → 跳转到第二板块（目的性检索）
+  - 卡片 2（辅入口/次优）：随便看看 → 跳转到第三板块（沉浸式探索）
+
+  关联文件：
+  - src/pages/index.astro（首页引入）
+  - 卡片 1 点击 → 滚动到 #purpose-section
+  - 卡片 2 点击 → 滚动到 #explore-section
+-->
+
+<section
+  class="relative min-h-screen flex items-center justify-center overflow-hidden"
+  id="hero-section"
+>
+  <!-- 背景：纯白 + 极淡绿色渐变 -->
+  <div
+    class="absolute inset-0 bg-gradient-to-b from-brand-green-bg/30 to-white"
+    aria-hidden="true"
+  ></div>
+
+  <!-- 前景内容 -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+    <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+
+      <!--
+        左侧：网站信息介绍区（PRD 第 5.1.1 章）
+        作用：提供网站品牌信息和行动引导
+      -->
+      <div class="flex-1 text-center lg:text-left">
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl text-neutral-text-heading mb-4 leading-tight">
+          鸟类科普网
+          <span class="section-underline mx-auto lg:mx-0"></span>
+        </h1>
+        <p class="text-lg sm:text-xl text-neutral-text-secondary mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+          专注鸟类垂直科普，覆盖宠物鸟饲养、文明观鸟、野生鸟类救助与保护四大场景。清新自然的治愈系科普体验，让每一次探索都充满惊喜。
+        </p>
+        <p class="text-base text-brand-green-dark font-medium">
+          您想以什么方式探索网站？
+        </p>
+        <!-- 向下滚动提示 -->
+        <div class="mt-8 animate-bounce opacity-50">
+          <svg class="h-6 w-6 mx-auto lg:mx-0 text-neutral-text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </div>
+      </div>
+
+
+      <!--
+        右侧：双无框功能卡片（PRD 第 5.1.1 章）
+        作用：浏览模式分流入口，主次权重差异
+      -->
+      <div class="flex-1 flex flex-col sm:flex-row gap-6 w-full">
+        <!-- 卡片 1：主入口 - 进入专题（高优先级） -->
+        <a
+          href="#purpose-section"
+          class="flex-1 group relative p-8 rounded-card bg-white shadow-card card-hover border border-neutral-divider hover:border-brand-green/40 cursor-pointer"
+          id="hero-card-primary"
+        >
+          <!-- TODO: 替换为实际插画资源 -->
+          <div class="relative z-10 flex flex-col items-center text-center gap-4">
+            <span class="text-5xl">🔍</span>
+            <h3 class="text-xl font-bold text-neutral-text-heading">进入专题</h3>
+            <p class="text-sm text-neutral-text-secondary">目的性快速检索<br />精准查找所需知识</p>
+          </div>
+        </a>
+
+        <!-- 卡片 2：辅入口 - 随便看看（次优先级） -->
+        <a
+          href="#explore-section"
+          class="flex-1 group relative p-8 rounded-card bg-white shadow-card card-hover border border-neutral-divider hover:border-brand-blue/30 cursor-pointer"
+          id="hero-card-secondary"
+        >
+          <!-- TODO: 替换为实际插画资源 -->
+          <div class="relative z-10 flex flex-col items-center text-center gap-4">
+            <span class="text-5xl">🎲</span>
+            <h3 class="text-xl font-bold text-neutral-text-heading">随便看看</h3>
+            <p class="text-sm text-neutral-text-secondary">沉浸式趣味探索<br />邂逅鸟类知识惊喜</p>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,102 @@
+<!--
+  作用：顶部常驻导航栏组件（PRD 第 4.1 章）
+  - 对齐参考项目 .navbar 样式：透明→滚动后毛玻璃 + 渐变 Logo 圆圈
+  - PC 端：Logo + 四大专题入口 + 搜索栏
+  - 移动端：Logo 居左 + 搜索栏居右，专题收纳为汉堡菜单
+  - 导航链接：药丸形圆角，hover 变绿
+
+  参考来源：BirdsOnlineWeb/css/styles.css .navbar
+  关联文件：
+  - src/components/global/SearchBar.astro
+  - src/layouts/BaseLayout.astro
+  - src/utils/constants.ts
+-->
+
+---
+import { TOPICS } from '../../utils/constants';
+import SearchBar from './SearchBar.astro';
+
+const topicPath = (topic: { slug: string }) => `/category/${topic.slug}`;
+---
+
+<header
+  class="navbar fixed top-0 left-0 right-0 z-50 px-4 lg:px-8 py-4 transition-all duration-400"
+  id="navbar"
+>
+  <div class="navbar-inner max-w-7xl mx-auto flex items-center justify-between gap-4">
+    <!-- Logo：渐变圆圈 + 文字，对齐 .logo -->
+    <a
+      href="/"
+      class="logo flex items-center gap-3 font-display font-bold text-lg text-neutral-text-heading no-underline hover-scale"
+    >
+      <!-- 渐变 Logo 圆圈（对齐 .logo-icon） -->
+        <img src="/images/icon/logo.svg" alt="Logo" class="w-8 h-8 object-contain"/>
+      <span class="hidden sm:inline">Birds2Online</span>
+    </a>
+
+    <!-- PC 端：导航链接 + 搜索 -->
+    <div class="nav-actions flex items-center gap-3">
+      <div class="hidden md:flex items-center gap-1">
+        {TOPICS.map((topic) => (
+          <a
+            href={topicPath(topic)}
+            class="nav-link px-4 py-2 text-sm font-medium rounded-button text-neutral-text-secondary hover:text-brand-green hover:bg-brand-green-bg transition-all duration-300"
+            style="transition-timing-function: var(--ease-bounce);">
+            <img src={topic.icon} alt={topic.name} class="w-6 h-6 mr-1 object-contain inline-block"/>{topic.name}
+          </a>
+        ))}
+      </div>
+
+      <SearchBar />
+
+      <!-- 移动端：汉堡菜单 -->
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-2 rounded-full hover:bg-neutral-bg transition-colors"
+        aria-label="打开菜单">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neutral-text-body" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- 移动端展开菜单 -->
+  <div id="mobile-menu" class="md:hidden hidden mt-3 bg-white/95 backdrop-blur-lg rounded-card shadow-lightbox p-4">
+    {TOPICS.map((topic) => (
+      <a
+        href={topicPath(topic)}
+        class="block px-4 py-3 text-sm font-medium text-neutral-text-secondary hover:text-brand-green hover:bg-brand-green-bg rounded-lg transition-colors">
+        <img src={topic.icon} alt={topic.name} class="w-4 h-4 mr-2 object-contain inline-block"/>{topic.name}
+      </a>
+    ))}
+  </div>
+</header>
+
+<script>
+  // 汉堡菜单
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+  }
+
+  // 滚动时导航栏变为毛玻璃效果（对齐 .navbar.scrolled）
+  const navbar = document.getElementById('navbar');
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      const s = navbar.style as any;
+      if (window.scrollY > 20) {
+        s.background = 'rgba(255, 255, 255, 0.85)';
+        s.backdropFilter = 'blur(16px)';
+        s.webkitBackdropFilter = 'blur(16px)';
+        s.boxShadow = 'var(--shadow-card)';
+      } else {
+        s.background = 'transparent';
+        s.backdropFilter = 'none';
+        s.webkitBackdropFilter = 'none';
+        s.boxShadow = 'none';
+      }
+    });
+  }
+</script>

@@ -1,0 +1,21 @@
+<!--
+  作用：引用块模块（PRD 第 8.4 章）
+  - 用于法律法规原文引用、权威机构说明、来源标注
+  - 左侧主色竖线标注，背景浅色填充
+  - 字体颜色稍弱于正文，与普通段落视觉区分清晰
+
+  关联文件：
+  - src/pages/article/[...slug].astro（文章页 Markdown > 语法渲染）
+
+  使用方式（在 markdown 中）：
+  > 这是引用内容……法律法规原文或权威机构说明。
+
+  渲染规则：
+  - 左侧品牌绿竖线（4px）
+  - 浅绿背景填充
+  - 字体颜色稍弱于正文
+-->
+
+<blockquote class="my-6 pl-5 pr-4 py-4 bg-brand-green-bg border-l-4 border-brand-green rounded-r-lg text-neutral-text-secondary text-[0.95rem] leading-relaxed">
+  <slot />
+</blockquote>

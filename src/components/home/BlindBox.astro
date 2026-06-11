@@ -1,0 +1,104 @@
+<!--
+  作用：今日鸟种盲盒模块（PRD 第 5.3.1 章）
+  - 随机展示鸟类科普卡片，每日更新
+  - 支持点击查看详情 + 随机刷新切换鸟种
+  - 位于首页第三板块左侧
+
+  关联文件：
+  - src/pages/index.astro（首页引入）
+  - src/utils/content.ts（getRandomArticles 函数）
+  - 依赖内容集合中有文章数据
+
+  数据流：
+  - Astro 服务端通过 getRandomArticles(1) 获取随机文章
+  - 客户端点击"换一个"按钮重新随机
+-->
+
+<div class="p-8 rounded-card bg-white shadow-card">
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-bold text-neutral-text-heading flex items-center gap-2">
+      <span>🎁</span> 今日鸟种盲盒
+    </h3>
+    <!-- TODO: 后续迭代将随机逻辑改为按日期固定，实现每日更新 -->
+    <button
+      id="blindbox-refresh"
+      class="text-sm text-brand-green-dark hover:text-brand-green transition-colors font-medium"
+    >
+      换一个 🔄
+    </button>
+  </div>
+
+  <p class="text-xs text-neutral-text-secondary mb-6">
+    每天一个随机鸟类科普，邂逅未知的羽翼精灵
+  </p>
+
+  <!-- 盲盒卡片内容区 -->
+  <div id="blindbox-content">
+    <!-- 初始加载的无数据空白状态 -->
+    <div class="flex flex-col items-center justify-center py-12 text-center">
+      <span class="text-6xl mb-4">🥚</span>
+      <p class="text-sm text-neutral-text-secondary">点击"换一个"开启盲盒</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  /**
+   * 作用：盲盒交互逻辑
+   * - 点击"换一个"按钮从预加载的文章列表中随机选取
+   * - 渲染文章卡片信息
+   * - 使用 sessionStorage 存储当前盲盒内容
+   */
+
+  // 预加载的文章数据（由 Astro 服务端注入）
+  const blindBoxArticles = (window as any).__BLIND_BOX_ARTICLES__ || [];
+
+  function renderBlindBox(article: any) {
+    const container = document.getElementById('blindbox-content');
+    if (!container) return;
+
+    if (!article) {
+      container.innerHTML = `
+        <div class="flex flex-col items-center justify-center py-12 text-center">
+          <span class="text-6xl mb-4">🥚</span>
+          <p class="text-sm text-neutral-text-secondary">暂无文章数据</p>
+        </div>`;
+      return;
+    }
+
+    // TODO: 替换 coverImage 为实际图片资源后移除 emoji fallback
+    const coverEmoji = article.data?.coverImage
+      ? `<img src="${article.data.coverImage}" alt="${article.data.title}" class="w-full h-40 object-cover rounded-lg mb-4" />`
+      : `<span class="text-6xl mb-4">🐦</span>`;
+
+    container.innerHTML = `
+      <a href="/article/${article.collection}/${article.id}" class="block group">
+        <div class="flex flex-col items-center text-center">
+          ${coverEmoji}
+          <h4 class="text-base font-bold text-neutral-text-heading group-hover:text-brand-green-dark transition-colors mb-2">
+            ${article.data.title}
+          </h4>
+          <p class="text-xs text-neutral-text-secondary line-clamp-2 mb-4">
+            ${article.data.summary}
+          </p>
+          <span class="text-xs text-brand-green-dark font-medium">
+            查看详情 →
+          </span>
+        </div>
+      </a>`;
+  }
+
+  function getRandomArticle() {
+    if (blindBoxArticles.length === 0) return null;
+    return blindBoxArticles[Math.floor(Math.random() * blindBoxArticles.length)];
+  }
+
+  document.getElementById('blindbox-refresh')?.addEventListener('click', () => {
+    renderBlindBox(getRandomArticle());
+  });
+
+  // 初始加载：展示第一个随机文章（如果有）
+  if (blindBoxArticles.length > 0) {
+    renderBlindBox(getRandomArticle());
+  }
+</script>

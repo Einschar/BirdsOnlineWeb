@@ -1,0 +1,85 @@
+<!--
+  作用：图片展示模块（PRD 第 8.2 章）
+  - 统一圆角裁切展示，无直角硬边
+  - 自适应容器宽度，无拉伸变形
+  - 支持点击放大预览（Lightbox 灯箱效果）
+
+  关联文件：
+  - src/pages/article/[...slug].astro（文章页 Markdown 图片渲染）
+  - src/styles/global.css（圆角、阴影变量定义）
+
+  使用方式（在 markdown 中）：
+  ![图片说明](/images/专题名/图片名.png)
+
+  渲染规则：
+  - 图片统一 rounded-xl 圆角
+  - 居中展示，最大宽度 100%
+  - 点击后全屏灯箱预览
+-->
+
+---
+interface Props {
+  src: string;
+  alt?: string;
+}
+
+const { src, alt = '' } = Astro.props;
+---
+
+<figure class="my-8 text-center">
+  <img
+    src={src}
+    alt={alt}
+    class="rounded-image mx-auto cursor-zoom-in transition-transform hover:scale-[1.02]"
+    loading="lazy"
+    style="max-width: 100%; height: auto; box-shadow: var(--shadow-card);"
+    data-lightbox-image
+    data-lightbox-src={src}
+  />
+  {alt && (
+    <figcaption class="mt-3 text-sm text-neutral-text-secondary">
+      {alt}
+    </figcaption>
+  )}
+</figure>
+
+<!--
+  作用：图片 Lightbox 灯箱效果
+  - 点击图片 → 全屏黑色遮罩 + 原图居中展示
+  - 点击遮罩或按 ESC → 关闭灯箱
+-->
+<script>
+  // 全局灯箱容器（所有 ContentImage 共享，只创建一次）
+  let lightbox: HTMLDivElement | null = null;
+
+  function ensureLightbox() {
+    if (lightbox) return lightbox;
+    lightbox = document.createElement('div');
+    lightbox.id = 'image-lightbox';
+    lightbox.className = 'fixed inset-0 z-[9998] bg-black/80 flex items-center justify-center cursor-zoom-out hidden';
+    lightbox.innerHTML = '<img src="" alt="" class="max-w-[90vw] max-h-[90vh] object-contain rounded-lg" />';
+    lightbox.addEventListener('click', () => lightbox?.classList.add('hidden'));
+    document.body.appendChild(lightbox);
+
+    // ESC 关闭
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') lightbox?.classList.add('hidden');
+    });
+
+    return lightbox;
+  }
+
+  // 为所有带 data-lightbox-image 属性的图片绑定点击
+  document.addEventListener('click', (e) => {
+    const img = (e.target as HTMLElement).closest('[data-lightbox-image]') as HTMLImageElement;
+    if (!img) return;
+
+    const lb = ensureLightbox();
+    const lbImg = lb.querySelector('img');
+    if (lbImg) {
+      lbImg.src = img.getAttribute('data-lightbox-src') || img.src;
+      lbImg.alt = img.alt;
+    }
+    lb.classList.remove('hidden');
+  });
+</script>

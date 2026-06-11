@@ -1,0 +1,46 @@
+<!--
+  作用：视频播放模块（PRD 第 8.3 章）
+  - 嵌入 Bilibili 视频 iframe
+  - 16:9 固定比例自适应布局，铺满父容器
+  - 手机 / PC 端无变形、不横向溢出
+  - 支持全屏播放
+
+  关联文件：
+  - src/pages/article/[...slug].astro（文章页 Markdown shortcode 调用）
+
+  使用方式（在 markdown 中）：
+  <VideoEmbed url="https://player.bilibili.com/player.html?bvid=XXX" title="视频标题说明" />
+
+  Props:
+  - url: B站 iframe 地址（必填）
+  - title: 视频标题说明（可选）
+-->
+
+---
+interface Props {
+  url: string;
+  title?: string;
+}
+
+const { url, title } = Astro.props;
+---
+
+<figure class="my-8">
+  <!-- 16:9 固定比例容器 -->
+  <div class="relative w-full overflow-hidden rounded-image" style="padding-top: 56.25%; box-shadow: var(--shadow-card);">
+    <iframe
+      src={url}
+      title={title || '科普视频'}
+      class="absolute inset-0 w-full h-full border-0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+      allowfullscreen
+      loading="lazy"
+    >
+    </iframe>
+  </div>
+  {title && (
+    <figcaption class="mt-3 text-sm text-neutral-text-secondary text-center">
+      🎬 {title}
+    </figcaption>
+  )}
+</figure>

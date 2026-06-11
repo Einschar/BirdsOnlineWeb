@@ -1,0 +1,201 @@
+<!--
+  作用：全站搜索栏组件（PRD 第 4.1.1 章）
+  - 支持实时联想检索（输入文字自动弹窗展示相关结果）
+  - 支持模糊匹配：标题、标签、简介关键词
+  - 联想结果分为两类：专题入口 + 文章入口
+  - 回车或点击联想条目直接跳转对应页面
+  - 点击页面空白处关闭搜索弹窗
+
+  实现策略（初版）：
+  - 使用 Pagefind 作为搜索后端（构建时生成静态索引）
+  - 若 Pagefind 未加载（dev 模式），回退到前端简易文本匹配
+  - 搜索弹窗 z-index 最高（9999），防止被其他模块遮挡
+
+  关联文件：
+  - src/styles/global.css（.search-dropdown z-index 定义）
+  - public/pagefind/（构建后自动生成，Pagefind 索引文件）
+  - src/components/global/NavBar.astro（父组件，包含此搜索栏）
+-->
+
+<div class="relative" id="search-container">
+  <!-- 搜索输入框 -->
+  <div class="relative">
+    <svg
+      class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-text-secondary pointer-events-none"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+    <input
+      type="text"
+      id="search-input"
+      placeholder="搜索文章..."
+      autocomplete="off"
+      class="w-40 lg:w-56 pl-10 pr-4 py-2 text-sm border border-neutral-divider rounded-full bg-neutral-bg focus:bg-white focus:border-brand-green focus:outline-none focus:ring-1 focus:ring-brand-green transition-all"
+    />
+  </div>
+
+  <!--
+    搜索联想弹窗
+    作用：输入文字时实时展示联想结果，分为专题入口和文章入口两类
+  -->
+  <div
+    id="search-dropdown"
+    class="search-dropdown absolute top-full mt-2 w-full lg:w-96 right-0 bg-white border border-neutral-divider rounded-card shadow-lightbox hidden"
+  >
+    <div id="search-results" class="max-h-80 overflow-y-auto p-2">
+      <!-- 动态填充搜索结果 -->
+    </div>
+    <div id="search-empty" class="p-4 text-sm text-neutral-text-secondary text-center hidden">
+      暂无相关内容
+    </div>
+  </div>
+</div>
+
+<script>
+  /**
+   * 作用：搜索栏交互逻辑
+   * - 监听输入框 input 事件，调用 Pagefind 搜索
+   * - 渲染联想结果弹窗（分类显示专题入口和文章入口）
+   * - 处理弹窗的显示/隐藏和点击外部关闭
+   */
+  (async function () {
+    const input = document.getElementById('search-input') as HTMLInputElement;
+    const dropdown = document.getElementById('search-dropdown');
+    const resultsContainer = document.getElementById('search-results');
+    const emptyMsg = document.getElementById('search-empty');
+
+    if (!input || !dropdown || !resultsContainer || !emptyMsg) return;
+
+    // 尝试加载 Pagefind（构建后可用）
+    let pagefind: any = null;
+    try {
+      // Pagefind 在构建后注入 window 对象
+      if (typeof (window as any).pagefind !== 'undefined') {
+        pagefind = (window as any).pagefind;
+      }
+    } catch (_) {
+      // Pagefind 不可用时不做任何处理，使用 fallback
+    }
+
+    // 简易 fallback 搜索（dev 模式或 Pagefind 未加载时使用）
+    async function fallbackSearch(query: string) {
+      // 专题入口匹配
+      const topicKeywords: Record<string, { name: string; icon: string; slug: string }> = {
+        '养鸟': { name: '养鸟日常', icon: '🐾', slug: 'yangniaorichang' },
+        '观鸟': { name: '观鸟指南', icon: '🔭', slug: 'guanniaozhinan' },
+        '救助': { name: '鸟类救助', icon: '🆘', slug: 'niaoleijiuzhu' },
+        '保护': { name: '鸟类保护', icon: '🌿', slug: 'niaoleibaohu' },
+        '宠物': { name: '养鸟日常', icon: '🐾', slug: 'yangniaorichang' },
+        '野生': { name: '鸟类救助', icon: '🆘', slug: 'niaoleijiuzhu' },
+      };
+
+      const results: Array<{ label: string; href: string; type: '专题' | '文章' }> = [];
+
+      // 匹配专题
+      for (const [key, val] of Object.entries(topicKeywords)) {
+        if (query.includes(key) || val.name.includes(query)) {
+          results.push({
+            label: `${val.icon} ${val.name}`,
+            href: `/category/${val.slug}`,
+            type: '专题',
+          });
+        }
+      }
+
+      // 匹配文章（从已有的链接数据中查找）
+      const articleLinks = document.querySelectorAll('[data-search-index]');
+      articleLinks.forEach((el) => {
+        const title = el.getAttribute('data-search-title') || '';
+        const tags = el.getAttribute('data-search-tags') || '';
+        const summary = el.getAttribute('data-search-summary') || '';
+        const href = el.getAttribute('data-search-href') || '';
+        if (
+          title.toLowerCase().includes(query.toLowerCase()) ||
+          tags.toLowerCase().includes(query.toLowerCase()) ||
+          summary.toLowerCase().includes(query.toLowerCase())
+        ) {
+          results.push({ label: title, href, type: '文章' });
+        }
+      });
+
+      return results.slice(0, 8);
+    }
+
+    async function doSearch(query: string) {
+      if (!query.trim()) {
+        dropdown!.classList.add('hidden');
+        return;
+      }
+
+      let results: Array<{ label: string; href: string; type: string }> = [];
+
+      if (pagefind) {
+        // Pagefind 搜索（生产环境）
+        const searchResult = await pagefind.search(query, {});
+        results = (searchResult?.results || []).slice(0, 8).map((r: any) => ({
+          label: r.meta?.title || r.url,
+          href: r.url,
+          type: '文章',
+        }));
+      }
+
+      // 同时加入 fallback 结果（涵盖专题入口）
+      const fallbackResults = await fallbackSearch(query);
+      const deduped = [...fallbackResults];
+      for (const r of results) {
+        if (!deduped.find((d) => d.href === r.href)) {
+          deduped.push(r);
+        }
+      }
+
+      // 渲染结果
+      if (deduped.length === 0) {
+        emptyMsg!.classList.remove('hidden');
+        resultsContainer!.innerHTML = '';
+      } else {
+        emptyMsg!.classList.add('hidden');
+        resultsContainer!.innerHTML = deduped
+          .map(
+            (r) => `
+            <a href="${r.href}" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-brand-green-bg transition-colors text-sm">
+              <span class="text-xs px-1.5 py-0.5 rounded bg-neutral-divider text-neutral-text-secondary shrink-0">${r.type}</span>
+              <span class="text-neutral-text-body truncate">${r.label}</span>
+            </a>
+          `
+          )
+          .join('');
+      }
+
+      dropdown!.classList.remove('hidden');
+    }
+
+    // 输入事件（防抖 200ms）
+    let timer: ReturnType<typeof setTimeout>;
+    input.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => doSearch(input.value.trim()), 200);
+    });
+
+    // 回车直接跳转第一个结果
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const firstLink = resultsContainer?.querySelector('a') as HTMLAnchorElement;
+        if (firstLink && !dropdown?.classList.contains('hidden')) {
+          window.location.href = firstLink.href;
+        }
+      }
+    });
+
+    // 点击页面空白处关闭弹窗
+    document.addEventListener('click', (e) => {
+      const container = document.getElementById('search-container');
+      if (container && !container.contains(e.target as Node)) {
+        dropdown?.classList.add('hidden');
+      }
+    });
+  })();
+</script>

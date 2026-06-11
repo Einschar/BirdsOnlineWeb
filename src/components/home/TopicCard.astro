@@ -1,0 +1,39 @@
+<!--
+  作用：专题卡片组件（PRD 第 5.2 章）
+  - 用于首页目的性检索区域的四大专题卡片
+  - 支持 hover 联动：当前卡片高亮，其余灰度弱化
+  - 点击跳转到对应专题分类页
+
+  关联文件：
+  - src/components/home/PurposeSection.astro（父组件，管理联动逻辑）
+  - src/utils/constants.ts（专题数据）
+
+  Props:
+  - topic: 专题信息对象
+  - index: 卡片索引（用于联动定位）
+-->
+
+---
+import type { TopicInfo } from '../../utils/constants';
+
+interface Props {
+  topic: TopicInfo;
+  index: number;
+}
+
+const { topic, index } = Astro.props;
+const href = `/category/${topic.slug}`;
+const topicIndex = String(index);
+---
+
+<a
+  href={href}
+  data-topic-index={topicIndex}
+  data-topic-slug={topic.slug}
+  class="topic-card flex flex-col items-center text-center p-6 bg-white border border-neutral-divider shadow-card card-hover cursor-pointer" style="border-radius: 24px;"
+>
+  <!-- 专题图标（PNG 图片） -->
+  <img src={topic.icon} alt={topic.name} class="w-16 h-16 mb-3 object-contain"/>
+  <h3 class="text-lg font-bold text-neutral-text-heading mb-1">{topic.name}</h3>
+  <p class="text-xs text-neutral-text-secondary line-clamp-2">{topic.shortIntro}</p>
+</a>

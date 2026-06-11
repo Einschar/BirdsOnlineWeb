@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- TODO: 替换为实际观鸟指南专题插画 -->
+  <rect width="200" height="200" rx="20" fill="#E8F6FD"/>
+  <text x="100" y="110" text-anchor="middle" font-size="64">🔭</text>
+  <text x="100" y="155" text-anchor="middle" font-size="16" fill="#1585C4" font-family="sans-serif">观鸟指南</text>
+</svg>

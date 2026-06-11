@@ -1,17 +1,23 @@
 {
-  "name": "square-solstice",
+  "name": "birds2online-web",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.0",
+  "description": "鸟类科普自适应网站 - Birds2Online",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "postbuild": "npx pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.4.4"
+    "@tailwindcss/vite": "^4.3.0",
+    "astro": "^6.4.4",
+    "pagefind": "^1.5.2",
+    "tailwindcss": "^4.3.0",
+    "unist-util-visit": "^5.1.0"
   }
 }

@@ -1,0 +1,65 @@
+<!--
+  作用：高亮框模块（PRD 第 8.6 章）
+  - 用于重要提示、救助警示、禁止行为提醒、科普重点知识框
+  - 支持三种语义类型：
+    - tip: 提示类（绿色），用于建议、推荐做法
+    - warning: 警示类（黄色），用于注意事项、风险提醒
+    - danger: 危险类（红色），用于禁止行为、违规警示、紧急救助注意事项
+  - 圆角卡片样式，左侧色条 + 对应功能色背景浅填充
+  - 图标 + 文字组合，视觉区分明确但不过于刺眼
+
+  关联文件：
+  - src/pages/article/[...slug].astro（文章页 Markdown shortcode 调用）
+  - src/styles/global.css（功能色变量定义）
+
+  使用方式（在 markdown 中使用 shortcode）：
+  <Callout type="tip">提示类内容</Callout>
+  <Callout type="warning">警示类内容</Callout>
+  <Callout type="danger">危险类内容</Callout>
+-->
+
+---
+type CalloutType = 'tip' | 'warning' | 'danger';
+
+interface Props {
+  type: CalloutType;
+}
+
+const { type = 'tip' } = Astro.props;
+
+const config: Record<CalloutType, { icon: string; label: string; borderClass: string; bgClass: string; textClass: string }> = {
+  tip: {
+    icon: '💡',
+    label: '提示',
+    borderClass: 'border-l-tip-green',
+    bgClass: 'bg-tip-green-bg',
+    textClass: 'text-neutral-text-body',
+  },
+  warning: {
+    icon: '⚠️',
+    label: '注意',
+    borderClass: 'border-l-warning-yellow',
+    bgClass: 'bg-warning-yellow-bg',
+    textClass: 'text-neutral-text-body',
+  },
+  danger: {
+    icon: '🚫',
+    label: '警示',
+    borderClass: 'border-l-danger-red',
+    bgClass: 'bg-danger-red-bg',
+    textClass: 'text-neutral-text-body',
+  },
+};
+
+const { icon, label, borderClass, bgClass, textClass } = config[type];
+---
+
+<div class={`my-6 pl-5 pr-4 py-4 ${bgClass} border-l-4 ${borderClass} rounded-r-lg ${textClass} text-[0.95rem] leading-relaxed flex items-start gap-3`}>
+  <span class="text-lg shrink-0" aria-hidden="true">{icon}</span>
+  <div>
+    <span class="font-bold text-sm uppercase tracking-wide">{label}</span>
+    <div class="mt-1">
+      <slot />
+    </div>
+  </div>
+</div>

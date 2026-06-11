@@ -1,0 +1,109 @@
+<!--
+  作用：抽屉式目录导航组件（PRD 第 7.2.1 / 7.2.2 章）
+  - PC 端：常驻页面左侧，显示文章所有标题的目录
+  - 移动端：收纳为顶部抽屉按钮，点击展开/收起
+  - 支持点击定位至对应章节
+  - 页面滚动时自动高亮当前阅读章节（Intersection Observer）
+
+  关联文件：
+  - src/pages/article/[...slug].astro（文章页使用）
+  - 依赖文章内容中的 <h2> / <h3> 标题元素
+
+  数据流：
+  - 客户端 JS 扫描文章内容区所有 h2/h3 → 生成目录树
+  - IntersectionObserver 监听标题位置 → 高亮当前项
+-->
+
+<nav class="article-toc" id="article-toc">
+  <!-- PC 端：常驻侧边目录标题 -->
+  <div class="hidden lg:block mb-4">
+    <h4 class="text-sm font-bold text-neutral-text-heading uppercase tracking-wide">目录</h4>
+    <div class="mt-1 h-0.5 w-8 bg-brand-green rounded-full"></div>
+  </div>
+
+  <!-- 移动端：抽屉按钮 -->
+  <button
+    id="toc-toggle-btn"
+    class="lg:hidden w-full flex items-center justify-between px-4 py-3 bg-neutral-bg rounded-card border border-neutral-divider text-sm font-medium text-neutral-text-heading mb-4"
+  >
+    <span>📑 目录</span>
+    <svg id="toc-toggle-icon" class="h-4 w-4 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+
+  <!-- 目录内容列表 -->
+  <ul
+    id="toc-list"
+    class="hidden lg:block space-y-1 text-sm border-l-2 border-neutral-divider"
+  >
+    <!-- 动态生成 -->
+  </ul>
+</nav>
+
+<script>
+  /**
+   * 作用：目录自动生成 + 滚动高亮逻辑
+   * - 扫描文章内容区所有 h2/h3 → 生成带锚点的目录链接
+   * - PC 端常驻显示，移动端通过按钮展开/收起
+   * - IntersectionObserver 实时高亮当前阅读位置
+   */
+  function initTOC() {
+    const tocList = document.getElementById('toc-list');
+    const contentArea = document.querySelector('.article-content');
+    if (!tocList || !contentArea) return;
+
+    // 从文章内容区提取所有标题
+    const headings = contentArea.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+      tocList.innerHTML = '<li class="pl-4 py-1 text-neutral-text-secondary text-xs">暂无目录</li>';
+      return;
+    }
+
+    // 构建目录 HTML
+    const items: { el: HTMLElement; li: HTMLElement }[] = [];
+    headings.forEach((heading, i) => {
+      const id = `section-${i}`;
+      heading.id = id;
+
+      const isH3 = heading.tagName === 'H3';
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="#${id}" class="block pl-4 py-1.5 ${isH3 ? 'pl-8' : ''} text-neutral-text-secondary hover:text-brand-green-dark hover:bg-brand-green-bg/50 rounded-r-lg transition-colors">${heading.textContent}</a>`;
+      tocList.appendChild(li);
+      items.push({ el: heading as HTMLElement, li });
+    });
+
+    // 移动端：目录展开/收起
+    const toggleBtn = document.getElementById('toc-toggle-btn');
+    const toggleIcon = document.getElementById('toc-toggle-icon');
+    if (toggleBtn && toggleIcon) {
+      toggleBtn.addEventListener('click', () => {
+        tocList.classList.toggle('hidden');
+        toggleIcon.classList.toggle('rotate-180');
+      });
+    }
+
+    // IntersectionObserver：滚动时高亮当前章节
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = items.findIndex((item) => item.el === entry.target);
+            items.forEach((item) => {
+              item.li.querySelector('a')?.classList.remove('text-brand-green-dark', 'font-medium');
+            });
+            if (idx >= 0) {
+              const link = items[idx]!.li.querySelector('a');
+              link?.classList.add('text-brand-green-dark', 'font-medium');
+            }
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
+    );
+
+    headings.forEach((h) => observer.observe(h));
+  }
+
+  initTOC();
+</script>

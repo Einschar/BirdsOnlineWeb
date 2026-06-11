@@ -1,0 +1,92 @@
+<!--
+  作用：步骤列表模块（PRD 第 8.5 章）
+  - 有序步骤：主色填充圆圈序号，用于操作流程指引
+  - 无序要点：主色小圆点标注，用于并列要点说明
+  - 行间距宽松，适配长文本阅读
+  - 禁止使用默认浏览器样式
+
+  关联文件：
+  - src/pages/article/[...slug].astro（文章页 Markdown 列表语法渲染）
+
+  使用方式（在 markdown 中）：
+  - 有序步骤：1. 2. 3. 有序列表
+  - 无序要点：- 无序列表
+
+  渲染规则：
+  - 有序列表：绿色圆形序号 + 粗体步骤文字
+  - 无序列表：绿色圆点标记
+-->
+
+<div class="my-6">
+  <slot />
+</div>
+
+<!--
+  作用：全局样式覆盖，确保列表样式统一
+  使用 :global() 嵌套在组件作用域内，避免样式泄漏到其他组件
+-->
+<style>
+  /* 有序列表（步骤）：品牌绿填充圆圈 */
+  div :global(ol) {
+    list-style: none;
+    counter-reset: steps;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  div :global(ol > li) {
+    counter-increment: steps;
+    position: relative;
+    padding-left: 3rem;
+    min-height: 2rem;
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.8;
+  }
+
+  div :global(ol > li::before) {
+    content: counter(steps);
+    position: absolute;
+    left: 0;
+    top: 0.15em;
+    width: 2rem;
+    height: 2rem;
+    background: var(--color-brand-green);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* 无序列表（要点）：品牌绿小圆点 */
+  div :global(ul) {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  div :global(ul > li) {
+    position: relative;
+    padding-left: 1.5rem;
+    line-height: 1.8;
+  }
+
+  div :global(ul > li::before) {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--color-brand-green);
+    border-radius: 50%;
+  }
+</style>

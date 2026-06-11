@@ -1,17 +1,40 @@
----
+<!--
+  作用：网站首页（PRD 第 5 章）
+  - 全站入口页面，承载双浏览模式分流的全部能力
+  - 三大板块垂直排列：
+    1. HeroSection - 首屏选择区（双模式入口分流）
+    2. PurposeSection - 目的性检索区（专题联动卡片）
+    3. ExploreSection - 沉浸式探索区（盲盒 + 转盘）
+  - 使用 BaseLayout（含顶部导航和页脚）
+
+  关联文件：
+  - src/layouts/BaseLayout.astro（全局布局）
+  - src/components/home/HeroSection.astro（首屏 Hero）
+  - src/components/home/PurposeSection.astro（目的性检索区）
+  - src/components/home/ExploreSection.astro（沉浸式探索区）
+  - src/components/common/BackToTop.astro（返回顶部按钮）
+
+  页面路由：/ （根路径）
+-->
 
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/home/HeroSection.astro';
+import PurposeSection from '../components/home/PurposeSection.astro';
+import ExploreSection from '../components/home/ExploreSection.astro';
+import BackToTop from '../components/common/BackToTop.astro';
+---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <!-- 第一板块：首屏 Hero 选择区 -->
+  <HeroSection />
+
+  <!-- 第二板块：目的性检索内容区 -->
+  <PurposeSection />
+
+  <!-- 第三板块：沉浸式探索内容区 -->
+  <ExploreSection />
+
+  <!-- 返回顶部按钮 -->
+  <BackToTop />
+</BaseLayout>

@@ -1,0 +1,135 @@
+<!--
+  作用：专题分类目录页（PRD 第 6 章）
+  - 四大专题各自独立的文章列表入口页
+  - 展示该专题下全部科普文章，卡片流布局
+  - PC 端三列网格，移动端单列竖向排列
+  - 动态路由：[slug] 对应 yangniaorichang / guanniaozhinan / niaoleijiuzhu / niaoleibaohu
+
+  视觉风格：纯白背景 + 细边框卡片 + 微妙阴影 + 绿色点缀
+  参考设计图2、3的卡片样式
+
+  关联文件：
+  - src/layouts/BaseLayout.astro（全局布局，含导航和页脚）
+  - src/utils/constants.ts（getTopicBySlug 查找专题元信息）
+  - src/utils/content.ts（getArticlesByCategory 查询文章列表）
+  - src/content.config.ts（内容集合定义）
+  - src/content/ 下的 .md 文件（文章数据源）
+
+  数据流：
+  - URL slug → getTopicBySlug(slug) → 专题元信息（标题、简介）
+  - URL slug → getArticlesByCategory(slug) → 该专题下所有文章列表
+-->
+
+---
+import { getTopicBySlug } from '../../utils/constants';
+import { getArticlesByCategory } from '../../utils/content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackToTop from '../../components/common/BackToTop.astro';
+
+export async function getStaticPaths() {
+  // 四大专题的 slug 列表
+  return [
+    { params: { slug: 'yangniaorichang' } },
+    { params: { slug: 'guanniaozhinan' } },
+    { params: { slug: 'niaoleijiuzhu' } },
+    { params: { slug: 'niaoleibaohu' } },
+  ];
+}
+
+const { slug } = Astro.params;
+const topic = getTopicBySlug(slug!);
+
+// 专题不存在时返回 404
+if (!topic) {
+  return new Response(null, { status: 404, statusText: '专题未找到' });
+}
+
+const articles = await getArticlesByCategory(slug!);
+---
+
+<BaseLayout title={`${topic.name} - 鸟类科普网`} description={topic.longIntro}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- 专题头部信息：简洁文字 + 底部绿色装饰线 -->
+    <div class="text-center mb-12">
+      <h1 class="font-display text-3xl lg:text-4xl font-bold text-neutral-text-heading mb-4">
+        {topic.name}
+        <span class="section-underline mx-auto"></span>
+      </h1>
+      <p class="text-neutral-text-secondary max-w-2xl mx-auto leading-relaxed">
+        {topic.longIntro}
+      </p>
+    </div>
+
+    <!-- 文章卡片网格 -->
+    {
+      articles.length === 0 ? (
+        <!-- 空状态：该专题下暂无文章时的提示 -->
+        <div class="text-center py-16">
+          <span class="text-6xl block mb-4">📝</span>
+          <p class="text-neutral-text-secondary">该专题下暂无文章，敬请期待</p>
+          <a
+            href="/"
+            class="inline-block mt-4 text-brand-green-dark hover:text-brand-green transition-colors"
+          >
+            ← 返回首页
+          </a>
+        </div>
+      ) : (
+        <!-- PC: 三列网格 | 平板: 两列 | 移动: 单列 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {articles.map((article) => (
+            <a
+              href={`/article/${article.collection}/${article.id}`}
+              class="group block rounded-card bg-white border border-neutral-divider shadow-card card-hover overflow-hidden"
+              data-search-index
+              data-search-title={article.data.title}
+              data-search-tags={article.data.tags?.join(',') || ''}
+              data-search-summary={article.data.summary}
+              data-search-href={`/article/${article.collection}/${article.id}`}
+            >
+              <!-- 封面图区域 -->
+              <div class="w-full h-48 bg-neutral-bg flex items-center justify-center overflow-hidden">
+                {
+                  article.data.coverImage ? (
+                    <img src={article.data.coverImage} alt={article.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  ) : (
+                    <span class="text-4xl opacity-20">{topic.icon}</span>
+                  )
+                }
+              </div>
+
+              <!-- 卡片文字内容 -->
+              <div class="p-5">
+                <!-- 日期 -->
+                <time datetime={article.data.publishDate.toISOString()} class="text-xs text-neutral-text-secondary">
+                  {article.data.publishDate.toLocaleDateString('zh-CN')}
+                </time>
+
+                <!-- 文章标题 -->
+                <h3 class="text-lg font-bold text-neutral-text-heading group-hover:text-brand-green-dark transition-colors mt-2 mb-2 line-clamp-2">
+                  {article.data.title}
+                </h3>
+
+                <!-- 文章简介 -->
+                <p class="text-sm text-neutral-text-secondary line-clamp-2 mb-3">
+                  {article.data.summary}
+                </p>
+
+                <!-- 标签 -->
+                <div class="flex gap-1 flex-wrap">
+                  {article.data.tags?.slice(0, 3).map((tag: string) => (
+                    <span class="px-2 py-0.5 text-xs rounded-full border border-brand-green/30 text-brand-green-dark">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+
+  <BackToTop />
+</BaseLayout>

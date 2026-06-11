@@ -1,0 +1,54 @@
+<!--
+  作用：面包屑导航组件（PRD 第 7.3 章第 1 条）
+  - 文章页专用：首页 / 专题目录 / 当前文章 三级面包屑
+  - 支持一键回退到首页或专题分类页
+  - 替代文章页隐藏的顶部导航，提供路径感知
+
+  关联文件：
+  - src/layouts/ArticleLayout.astro（文章沉浸式布局中引入）
+  - src/utils/constants.ts（getTopicBySlug 查找专题信息）
+-->
+
+---
+interface Props {
+  /** 所属分类 slug */
+  categorySlug: string;
+  /** 所属分类名称 */
+  categoryName: string;
+  /** 当前文章标题 */
+  articleTitle: string;
+}
+
+const { categorySlug, categoryName, articleTitle } = Astro.props;
+---
+
+<nav
+  class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4"
+  aria-label="面包屑导航"
+>
+  <ol class="flex items-center gap-2 text-sm text-neutral-text-secondary">
+    <li>
+      <a href="/" class="hover:text-brand-green-dark transition-colors">
+        🏠 首页
+      </a>
+    </li>
+    <li>
+      <svg class="h-4 w-4 text-neutral-divider" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+      </svg>
+    </li>
+    <li>
+      <a href={`/category/${categorySlug}`} class="hover:text-brand-green-dark transition-colors">
+        {categoryName}
+      </a>
+    </li>
+    <li>
+      <svg class="h-4 w-4 text-neutral-divider" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+      </svg>
+    </li>
+    <li class="text-neutral-text-body font-medium truncate max-w-[200px]">
+      {articleTitle}
+    </li>
+  </ol>
+</nav>
