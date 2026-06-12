@@ -1,0 +1,330 @@
+<!--
+  作用：环形水滴鸟转盘组件 —— 适配「趣味探索」右侧区域
+  - 4 圈同心圆环，各自逆时针匀速自转
+  - 每圈分布鸟类图标，hover 放大+发光+对话气泡
+  - PC 点击、移动端点击 → 跳转相关文章
+  - 所有样式以 .bird-orbit-wrapper 为命名空间，不污染全局
+
+  ★ 可配置参数（在下方 BIRD_DATA 数组中修改）：
+    - name: 鸟名（气泡显示"我是[name]"）
+    - img: 图片路径（public/illustrations/ 下）
+    - ring: 圈层 0-3（0=最内，3=最外）
+    - keyword: 点击后搜索的文章关键词
+   ★ 自转速度：在 CSS 中修改 .bo-ring[N] 的 animation-duration
+-->
+
+<div class="bird-orbit-wrapper relative" id="bird-orbit">
+  <!-- 对话气泡（PC hover） -->
+  <div id="bo-tooltip" class="absolute left-1/2 z-20 opacity-0 transition-opacity duration-300 pointer-events-none" style="top: -20px; transform: translateX(-50%);">
+    <div class="bg-white px-4 py-2 rounded-2xl shadow-card border border-neutral-divider text-center whitespace-nowrap">
+      <span id="bo-tooltip-text" class="text-sm font-medium text-neutral-text-body"></span>
+    </div>
+    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-white"></div>
+  </div>
+
+  <!-- 环形容器 -->
+  <div class="bo-container" id="bo-container"></div>
+
+  <!-- 移动端底部卡片 -->
+  <div id="bo-mobile-card" class="hidden fixed inset-x-4 bottom-8 z-50 bg-white rounded-card shadow-lightbox p-6 mx-auto max-w-sm border border-neutral-divider">
+    <p id="bo-mobile-card-text" class="text-center text-lg font-bold text-neutral-text-heading mb-4"></p>
+    <div class="flex gap-3">
+      <a id="bo-mobile-card-link" href="#" class="btn-primary flex-1 text-center text-sm">查看详情 →</a>
+      <button id="bo-mobile-card-close" class="btn-secondary text-sm">关闭</button>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  /* ══════ 容器 ══════ */
+  .bird-orbit-wrapper { position: relative; }
+
+  .bo-container {
+    position: relative;
+    width: 512px;
+    height: 512px;
+    max-width: 90vw;
+    max-height: 90vw;
+    margin: 0 auto;
+  }
+
+  /* ══════ 每一圈旋转层 ══════ */
+  .bo-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    transform-origin: 0 0;
+  }
+
+  /*
+    自转速度配置（修改 animation-duration 即可调节）：
+    圈0（最内）: 24s → 最快
+    圈1:        30s
+    圈2:        36s
+    圈3（最外）: 42s → 最慢
+  */
+  .bo-ring[data-ring="0"] { animation: bo-spin 24s linear infinite; animation-direction: reverse; }
+  .bo-ring[data-ring="1"] { animation: bo-spin 30s linear infinite; animation-direction: reverse; }
+  .bo-ring[data-ring="2"] { animation: bo-spin 36s linear infinite; animation-direction: reverse; }
+  .bo-ring[data-ring="3"] { animation: bo-spin 42s linear infinite; animation-direction: reverse; }
+
+  .bo-ring.bo-paused { animation-play-state: paused; }
+
+  @keyframes bo-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* ══════ 水滴鸟节点（无圆形蒙版） ══════ */
+  .bo-drop {
+    position: absolute;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 2;
+    /* 过渡曲线保留原 cubic-bezier */
+    transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .bo-drop-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* 柔和浅蓝色默认阴影（无 hover 时） */
+    filter: drop-shadow(0 2px 8px rgba(132, 219, 93, 0.12))
+            drop-shadow(0 0 4px rgba(28, 157, 228, 0.06));
+    transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+                filter 0.38s ease;
+  }
+
+  /* ── PC Hover：放大 1.15x + 渐变蓝色柔和发光 ── */
+  @media (hover: hover) and (pointer: fine) {
+    .bo-drop:hover { z-index: 10; }
+    .bo-drop:hover .bo-drop-img {
+      transform: scale(1.15);
+      /* 多层蓝色 drop-shadow 模拟渐变发光，强度柔和、不刺眼 */
+      filter: drop-shadow(0 0 12px rgba(28, 157, 228, 0.25))
+              drop-shadow(0 0 24px rgba(28, 157, 228, 0.12))
+              drop-shadow(0 4px 16px rgba(28, 157, 228, 0.08));
+    }
+  }
+
+  /* ── 移动端 tap ── */
+  .bo-drop:active .bo-drop-img { transform: scale(1.15); }
+
+  /* ── 移动端适配 ── */
+  @media (max-width: 768px) {
+    .bo-container {
+      width: min(85vw, 400px);
+      height: min(85vw, 400px);
+    }
+    .bo-drop:hover { z-index: 2; }
+    .bo-drop:hover .bo-drop-img {
+      transform: none;
+      filter: none;
+    }
+  }
+  @media (max-width: 480px) {
+    .bo-container {
+      width: min(80vw, 300px);
+      height: min(80vw, 300px);
+    }
+  }
+</style>
+
+<script is:inline>
+  /* ══════════════════════════════════════════════════════════
+   ★ BIRD_DATA —— 配置每只鸟的信息（可编辑） ★
+     每条记录：
+       name    — 鸟名（气泡显示 "我是[name]"）
+       img     — 图片路径（public/illustrations/ 下）
+       ring    — 圈层 (0=最内圈, 1, 2, 3=最外圈)
+       keyword — 点击后搜索文章的关键词，匹配文章标题/标签
+   ══════════════════════════════════════════════════════════ */
+  /*
+    可用图片资源（public/illustrations/ 下）：
+    bird1.PNG, bird2.PNG, bird3.PNG, bird4.PNG.png, bird5.PNG.png,
+    laoying.png, wudong.png, yingwu.png, zhuomuniao.png
+    TODO: 替换为实际鸟类图标
+  */
+  var BIRD_DATA = [
+    // ── 圈 0（内圈 · 3 只） ──
+    { name:'山雀',   img:'/illustrations/bird1.PNG',      ring:0, keyword:'鸟' },
+    { name:'翠鸟',   img:'/illustrations/bird2.PNG',      ring:0, keyword:'翠鸟' },
+    { name:'蜂鸟',   img:'/illustrations/bird3.PNG',      ring:0, keyword:'鸟' },
+
+    // ── 圈 1（3 只） ──
+    { name:'鹦鹉',   img:'/illustrations/yingwu.png',     ring:1, keyword:'鹦鹉' },
+    { name:'啄木鸟', img:'/illustrations/zhuomuniao.png', ring:1, keyword:'啄木鸟' },
+    { name:'老鹰',   img:'/illustrations/laoying.png',    ring:1, keyword:'猛禽' },
+
+    // ── 圈 2（8 只） ──
+    { name:'鸟4',    img:'/illustrations/bird4.PNG.png',  ring:2, keyword:'鸟' },
+    { name:'鸟5',    img:'/illustrations/bird5.PNG.png',  ring:2, keyword:'鸟' },
+    { name:'小鸟',   img:'/illustrations/wudong.png',     ring:2, keyword:'鸟' },
+    { name:'山雀',   img:'/illustrations/bird1.PNG',      ring:2, keyword:'鸟' },
+    { name:'翠鸟',   img:'/illustrations/bird2.PNG',      ring:2, keyword:'翠鸟' },
+    { name:'蜂鸟',   img:'/illustrations/bird3.PNG',      ring:2, keyword:'鸟' },
+    { name:'鹦鹉',   img:'/illustrations/yingwu.png',     ring:2, keyword:'鹦鹉' },
+    { name:'啄木鸟', img:'/illustrations/zhuomuniao.png', ring:2, keyword:'啄木鸟' },
+
+    // ── 圈 3（外圈 · 8 只） ──
+    { name:'老鹰',   img:'/illustrations/laoying.png',    ring:3, keyword:'猛禽' },
+    { name:'鸟4',    img:'/illustrations/bird4.PNG.png',  ring:3, keyword:'鸟' },
+    { name:'鸟5',    img:'/illustrations/bird5.PNG.png',  ring:3, keyword:'鸟类' },
+    { name:'小鸟',   img:'/illustrations/wudong.png',     ring:3, keyword:'鸟' },
+    { name:'鹦鹉',   img:'/illustrations/yingwu.png',     ring:3, keyword:'鹦鹉' },
+    { name:'啄木鸟', img:'/illustrations/zhuomuniao.png', ring:3, keyword:'啄木鸟' },
+    { name:'老鹰',   img:'/illustrations/laoying.png',    ring:3, keyword:'猛禽' },
+    { name:'小鸟',   img:'/illustrations/wudong.png',     ring:3, keyword:'鸟' },
+  ];
+
+  /* ── 按圈层分组 ── */
+  var BIRDS_BY_RING = [[],[],[],[]];
+  for (var i = 0; i < BIRD_DATA.length; i++) {
+    var b = BIRD_DATA[i];
+    if (b.ring >= 0 && b.ring < 4) BIRDS_BY_RING[b.ring].push(b);
+  }
+
+  /* ── 搜索文章（从页面 data-search-index 元素匹配） ── */
+  function findArticleHref(keyword) {
+    var articles = document.querySelectorAll('[data-search-index]');
+    if (!articles.length) return null;
+    var kw = keyword.toLowerCase();
+    for (var i = 0; i < articles.length; i++) {
+      var el = articles[i];
+      var title = (el.getAttribute('data-search-title') || '').toLowerCase();
+      var tags  = (el.getAttribute('data-search-tags')  || '').toLowerCase();
+      if (title.includes(kw) || tags.includes(kw)) return el.getAttribute('data-search-href');
+    }
+    for (var i = 0; i < articles.length; i++) {
+      var el = articles[i];
+      var summary = (el.getAttribute('data-search-summary') || '').toLowerCase();
+      if (summary.includes(kw)) return el.getAttribute('data-search-href');
+    }
+    return null;
+  }
+
+  /* ── 初始化转盘 ── */
+  (function() {
+    var container = document.getElementById('bo-container');
+    if (!container) return;
+
+    var isMobile = window.matchMedia('(max-width: 768px)').matches;
+    /* 每圈水滴尺寸（px） — 内圈小、外圈大 */
+    var dropSizes  = [48, 56, 64, 72];
+    /* 每圈水滴数量 */
+    var dropCounts = [3, 3, 8, 8];
+    /* 轨道半径（px）— 内圈最小、外圈最大 */
+    var radii      = [65, 110, 160, 205];
+    var tooltip    = document.getElementById('bo-tooltip');
+    var tooltipText = document.getElementById('bo-tooltip-text');
+    var rings = [];
+
+    function build() {
+      var size = container.offsetWidth || 512;
+      var scale = size / 512;
+
+      for (var r = 0; r < 4; r++) {
+        var birds = BIRDS_BY_RING[r];
+        var count = dropCounts[r];
+        if (!count || !birds.length) continue;
+
+        var ringEl = document.createElement('div');
+        ringEl.className = 'bo-ring';
+        ringEl.setAttribute('data-ring', String(r));
+        ringEl.style.zIndex = String(4 - r);
+        container.appendChild(ringEl);
+
+        var radius = size * (radii[r] / 512);
+        var dropW = dropSizes[r] * scale;
+
+        for (var i = 0; i < count; i++) {
+          var bird = birds[i % birds.length];
+          var angle = (360 / count) * i - 90;
+          var rad = (angle * Math.PI) / 180;
+          var x = Math.cos(rad) * radius;
+          var y = Math.sin(rad) * radius;
+          var rotDeg = angle + 180;
+
+          var drop = document.createElement('div');
+          drop.className = 'bo-drop';
+          drop.setAttribute('data-bird-name', bird.name);
+          drop.setAttribute('data-bird-keyword', bird.keyword);
+          drop.setAttribute('data-ring', String(r));
+          drop.style.width  = dropW + 'px';
+          drop.style.height = dropW + 'px';
+          drop.style.marginLeft = (-dropW / 2) + 'px';
+          drop.style.marginTop  = (-dropW / 2) + 'px';
+          drop.style.transform = 'translate(' + x + 'px, ' + y + 'px) rotate(' + rotDeg + 'deg)';
+
+          /* 图片：SVG 优先，失败自动回退 PNG */
+          /* 直接使用 PNG 图片，加载失败时使用 fallback */
+          var imgSrc = bird.img;
+          drop.innerHTML = '<img class="bo-drop-img" src="' + imgSrc + '" alt="' + bird.name + '" onerror="this.onerror=null;this.src=\'/illustrations/wudong.png\'" />';
+
+          ringEl.appendChild(drop);
+        }
+        rings.push(ringEl);
+      }
+    }
+
+    /* ── PC 交互 ── */
+    function setupPC() {
+      container.addEventListener('mouseover', function(e) {
+        var drop = e.target ? e.target.closest('.bo-drop') : null;
+        if (!drop) return;
+        var ri = parseInt(drop.getAttribute('data-ring') || '0', 10);
+        if (rings[ri]) rings[ri].classList.add('bo-paused');
+        var name = drop.getAttribute('data-bird-name') || '鸟';
+        if (tooltip && tooltipText) {
+          tooltipText.textContent = '我是' + name;
+          tooltip.style.opacity = '1';
+        }
+      });
+
+      container.addEventListener('mouseout', function(e) {
+        var drop = e.target ? e.target.closest('.bo-drop') : null;
+        if (!drop) return;
+        var ri = parseInt(drop.getAttribute('data-ring') || '0', 10);
+        if (rings[ri]) rings[ri].classList.remove('bo-paused');
+        if (tooltip) tooltip.style.opacity = '0';
+      });
+
+      container.addEventListener('click', function(e) {
+        var drop = e.target ? e.target.closest('.bo-drop') : null;
+        if (!drop) return;
+        e.stopPropagation();
+        var keyword = drop.getAttribute('data-bird-keyword') || '';
+        window.location.href = findArticleHref(keyword) || '/category/niaoleibaohu';
+      });
+    }
+
+    /* ── 移动端交互 ── */
+    function setupMobile() {
+      var card = document.getElementById('bo-mobile-card');
+      var cardText = document.getElementById('bo-mobile-card-text');
+      var cardLink = document.getElementById('bo-mobile-card-link');
+      var cardClose = document.getElementById('bo-mobile-card-close');
+      container.addEventListener('click', function(e) {
+        var drop = e.target ? e.target.closest('.bo-drop') : null;
+        if (!drop) return;
+        e.stopPropagation();
+        var name = drop.getAttribute('data-bird-name') || '鸟';
+        var keyword = drop.getAttribute('data-bird-keyword') || '';
+        var href = findArticleHref(keyword) || '/category/niaoleibaohu';
+        if (card && cardText && cardLink) {
+          cardText.textContent = '我是' + name;
+          cardLink.href = href;
+          card.classList.remove('hidden');
+        }
+      });
+      if (cardClose) cardClose.addEventListener('click', function() {
+        if (card) card.classList.add('hidden');
+      });
+    }
+
+    build();
+    if (isMobile) setupMobile(); else setupPC();
+  })();
+</script>

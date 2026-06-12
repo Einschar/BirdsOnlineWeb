@@ -1,31 +1,25 @@
 <!--
   作用：首页第三板块 - 沉浸式探索内容区（PRD 第 5.3 章）
   - 面向休闲探索用户，轻量化趣味交互
-  - 左右二分屏布局：左侧盲盒模块 + 右侧转盘模块
-  - 包含文章数据预加载逻辑（供盲盒和转盘客户端使用）
+  - 左右二分屏布局：左侧盲盒模块 + 右侧环形水滴转盘
 
   关联文件：
   - src/components/home/BlindBox.astro（左侧盲盒子组件）
-  - src/components/home/SpinWheel.astro（右侧转盘子组件）
+  - src/components/home/OrbitWheel.astro（右侧环形水滴转盘，复刻 BirdsOnlineWeb）
   - src/utils/content.ts（getRandomArticles 获取随机文章）
   - src/pages/index.astro（首页引入）
 
   数据流：
-  - Astro 服务端调用 getRandomArticles() 获取随机文章
-  - 通过 window.__BLIND_BOX_ARTICLES__ 注入盲盒
-  - 通过 window.__SPIN_WHEEL_ARTICLES__ 注入转盘
+  - Astro 服务端调用 getRandomArticles() → blindBoxData → 注入盲盒客户端
 -->
 
 ---
 import { getRandomArticles } from '../../utils/content';
 import BlindBox from './BlindBox.astro';
-import SpinWheel from './SpinWheel.astro';
+import OrbitWheel from './BirdOrbit.astro';
 
-// 服务端获取随机文章数据，分别用于盲盒和转盘
+// 盲盒数据
 const blindBoxArticles = await getRandomArticles(8);
-const spinWheelArticles = await getRandomArticles(8);
-
-// 转换为前端可用格式（仅传递必要字段）
 const blindBoxData = blindBoxArticles.map((a) => ({
   id: a.id,
   collection: a.collection,
@@ -34,13 +28,6 @@ const blindBoxData = blindBoxArticles.map((a) => ({
     summary: a.data.summary,
     coverImage: a.data.coverImage || null,
   },
-}));
-
-const spinWheelData = spinWheelArticles.map((a) => ({
-  title: a.data.title,
-  summary: a.data.summary,
-  href: `/article/${a.collection}/${a.id}`,
-  emoji: '🐦',
 }));
 ---
 
@@ -54,33 +41,26 @@ const spinWheelData = spinWheelArticles.map((a) => ({
       <h2 class="font-display text-3xl font-bold text-neutral-text-heading mb-3">趣味探索</h2>
       <span class="section-underline mx-auto"></span>
       <p class="text-neutral-text-secondary max-w-2xl mx-auto">
-        不知道从哪开始？让盲盒和转盘带你随机邂逅鸟类知识，每一次点击都是新的发现。
+        不知道从哪开始？让盲盒和水滴转盘带你随机邂逅鸟类知识，每一次点击都是新的发现。
       </p>
     </div>
 
-    <!-- 左右二分屏布局（PRD 第 5.3.1 章） -->
-    <div class="flex flex-col lg:flex-row gap-8">
-      <!-- 左侧：今日鸟种盲盒 -->
-      <div class="flex-1">
+    <!-- 左右布局：左 1/3 盲盒 + 右 2/3 环形转盘 -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      <!-- 左侧 1/3：今日鸟种盲盒 -->
+      <div class="lg:col-span-1">
         <BlindBox />
       </div>
 
-      <!-- 右侧：鸟类趣味转盘 -->
-      <div class="flex-1 flex justify-center">
-        <SpinWheel articles={spinWheelData} />
+      <!-- 右侧 2/3：环形水滴鸟转盘（圆心居中） -->
+      <div class="lg:col-span-2 flex justify-center items-center min-h-[520px]">
+        <OrbitWheel />
       </div>
     </div>
   </div>
 </section>
 
-<!--
-  作用：向客户端注入文章数据
-  - window.__BLIND_BOX_ARTICLES__：盲盒模块使用
-  - window.__SPIN_WHEEL_ARTICLES__：转盘模块使用
-
-  注意：使用 JSON.stringify 将 Astro 服务端数据序列化为客户端可读取的 JS 对象
--->
-<script is:inline define:vars={{ blindBoxData, spinWheelData }}>
+<!-- 盲盒数据注入 -->
+<script is:inline define:vars={{ blindBoxData }}>
   window.__BLIND_BOX_ARTICLES__ = blindBoxData;
-  window.__SPIN_WHEEL_ARTICLES__ = spinWheelData;
 </script>

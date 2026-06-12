@@ -1,0 +1,290 @@
+<!--
+  作用：环形水滴鸟转盘（复刻 BirdsOnlineWeb BirdsCircle）
+  - 4 圈同心圆环，所有圈同速缓慢匀速自转
+  - PC hover：暂停旋转 + "我是XX鸟"气泡
+  - PC click：跳转到匹配该鸟关键词的文章
+  - 移动端 click：弹出卡片 → 按钮进入文章
+  - 样式名前缀 ow-，不污染全局
+
+  ★ 鸟名与文章关联配置（可编辑）：修改下方 BIRDS 数组即可
+-->
+
+<div class="ow-container relative" id="orbit-wheel">
+  <!-- 气泡：PC hover 时显示 -->
+  <div id="ow-tooltip" class="absolute -top-12 left-1/2 -translate-x-1/2 z-20 opacity-0 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+    <div class="bg-white px-4 py-2 rounded-2xl shadow-card border border-neutral-divider text-center">
+      <span id="ow-tooltip-text" class="text-sm font-medium text-neutral-text-body"></span>
+    </div>
+    <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-white"></div>
+  </div>
+
+  <!-- 环形容器 -->
+  <div class="ow-ring-area w-full flex items-center justify-center" style="min-height: 520px;">
+    <div class="ow-ring-container" id="ow-ring-container"></div>
+  </div>
+
+  <!-- 移动端底部卡片 -->
+  <div id="ow-mobile-card" class="hidden fixed inset-x-4 bottom-8 z-50 bg-white rounded-card shadow-lightbox p-6 mx-auto max-w-sm border border-neutral-divider">
+    <p id="ow-mobile-card-text" class="text-center text-lg font-bold text-neutral-text-heading mb-4"></p>
+    <div class="flex gap-3">
+      <a id="ow-mobile-card-link" href="#" class="btn-primary flex-1 text-center text-sm">查看详情 →</a>
+      <button id="ow-mobile-card-close" class="btn-secondary text-sm">关闭</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ── 容器 ── */
+  .ow-ring-container {
+    position: relative;
+    width: 520px;
+    height: 520px;
+    max-width: 90vw;
+    max-height: 90vw;
+  }
+
+  /* ── 每圈独立匀速自转（同速缓慢） ── */
+  .ow-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    transform-origin: 0 0;
+  }
+  .ow-ring { animation: ow-spin 40s linear infinite; }
+  .ow-ring.ow-paused { animation-play-state: paused; }
+
+  @keyframes ow-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* ── Drop ── */
+  .ow-drop {
+    position: absolute;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 2;
+    transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .ow-drop-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 4px 12px rgba(28, 157, 228, 0.15));
+    transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+                filter 0.38s ease;
+  }
+
+  /* PC Hover */
+  @media (hover: hover) and (pointer: fine) {
+    .ow-drop:hover { z-index: 10; }
+    .ow-drop:hover .ow-drop-img {
+      transform: scale(1.15);
+      filter: drop-shadow(0 8px 28px rgba(28, 157, 228, 0.4)) brightness(1.15);
+    }
+  }
+
+  /* 移动端 tap */
+  .ow-drop:active .ow-drop-img { transform: scale(1.15); }
+
+  /* 移动端适配 */
+  @media (max-width: 768px) {
+    .ow-ring-container {
+      width: min(85vw, 400px);
+      height: min(85vw, 400px);
+    }
+    .ow-drop:hover { z-index: 2; }
+    .ow-drop:hover .ow-drop-img {
+      transform: none;
+      filter: drop-shadow(0 4px 12px rgba(28, 157, 228, 0.15));
+    }
+  }
+  @media (max-width: 480px) {
+    .ow-ring-container {
+      width: min(80vw, 300px);
+      height: min(80vw, 300px);
+    }
+  }
+</style>
+
+<script is:inline>
+  /* ══════════════════════════════════════════════════════════
+   ★ BIRDS 数组 —— 可编辑（添加/修改/删除鸟种） ★
+     每条记录：
+       id          — 唯一标识
+       name        — 显示名称（气泡：我是[name]）
+       svg         — 水滴图标路径（public/illustrations/下）
+       ring        — 圈层 0-3（0=最内圈, 3=最外圈）
+       clickSearch — 点击后搜索的文章关键词
+   ══════════════════════════════════════════════════════════ */
+  const BIRDS = [
+    { id:'magpie',        name:'喜鹊',   svg:'/illustrations/unknown.svg',  ring:0, clickSearch:'喜鹊' },
+    { id:'kingfisher',    name:'翠鸟',   svg:'/illustrations/bird1.svg',    ring:0, clickSearch:'翠鸟' },
+    { id:'eagle',         name:'金雕',   svg:'/illustrations/bird3.svg',    ring:0, clickSearch:'猛禽' },
+
+    { id:'swan',          name:'天鹅',   svg:'/illustrations/bird2.svg',    ring:1, clickSearch:'天鹅' },
+    { id:'flamingo',      name:'火烈鸟', svg:'/illustrations/bird4.svg',    ring:1, clickSearch:'火烈鸟' },
+    { id:'owl',           name:'猫头鹰', svg:'/illustrations/bird5.svg',    ring:1, clickSearch:'猫头鹰' },
+
+    { id:'peacock',       name:'孔雀',   svg:'/illustrations/peacock.svg',  ring:2, clickSearch:'孔雀' },
+    { id:'crane',         name:'丹顶鹤', svg:'/illustrations/crane.svg',    ring:2, clickSearch:'丹顶鹤' },
+    { id:'hummingbird',   name:'蜂鸟',   svg:'/illustrations/hummingbird.svg',ring:2, clickSearch:'蜂鸟' },
+    { id:'woodpecker',    name:'啄木鸟', svg:'/illustrations/woodpecker.svg',ring:2, clickSearch:'啄木鸟' },
+    { id:'penguin',       name:'企鹅',   svg:'/illustrations/penguin.svg',  ring:2, clickSearch:'企鹅' },
+    { id:'parrot',        name:'鹦鹉',   svg:'/illustrations/parrot.svg',   ring:2, clickSearch:'鹦鹉' },
+    { id:'buzhiming',     name:'不知名鸟',svg:'/illustrations/buzhiming.svg',ring:2, clickSearch:'鸟' },
+    { id:'unknown',       name:'未知鸟', svg:'/illustrations/unknown.svg',  ring:2, clickSearch:'鸟类' },
+
+    { id:'laoying',       name:'老鹰',   svg:'/illustrations/laoying.svg',  ring:3, clickSearch:'猛禽' },
+    { id:'owl2',          name:'鸮',     svg:'/illustrations/owl.svg',      ring:3, clickSearch:'猫头鹰' },
+    { id:'kingfisher2',   name:'鱼狗',   svg:'/illustrations/kingfisher.svg',ring:3, clickSearch:'翠鸟' },
+    { id:'swan2',         name:'疣鼻天鹅',svg:'/illustrations/swan.svg',    ring:3, clickSearch:'天鹅' },
+    { id:'eagle2',        name:'金鹰',   svg:'/illustrations/eagle.svg',    ring:3, clickSearch:'鹰' },
+    { id:'flamingo2',     name:'红鹳',   svg:'/illustrations/flamingo.svg', ring:3, clickSearch:'火烈鸟' },
+    { id:'magpie2',       name:'鹊鸟',   svg:'/illustrations/magpie.svg',   ring:3, clickSearch:'鹊' },
+    { id:'peacock2',      name:'蓝孔雀', svg:'/illustrations/peacock.svg',  ring:3, clickSearch:'孔雀' },
+  ];
+
+  /* ── 按圈层分组 ── */
+  const BIRDS_BY_RING = [[],[],[],[]];
+  BIRDS.forEach(function(b) { if (b.ring >= 0 && b.ring < 4) BIRDS_BY_RING[b.ring].push(b); });
+
+  /* ── 搜索文章 ── */
+  function findArticleHref(keyword) {
+    var articles = document.querySelectorAll('[data-search-index]');
+    if (!articles.length) return null;
+    var kw = keyword.toLowerCase();
+    for (var i = 0; i < articles.length; i++) {
+      var el = articles[i];
+      var title = (el.getAttribute('data-search-title') || '').toLowerCase();
+      var tags  = (el.getAttribute('data-search-tags')  || '').toLowerCase();
+      if (title.includes(kw) || tags.includes(kw)) return el.getAttribute('data-search-href');
+    }
+    for (var i = 0; i < articles.length; i++) {
+      var el = articles[i];
+      var summary = (el.getAttribute('data-search-summary') || '').toLowerCase();
+      if (summary.includes(kw)) return el.getAttribute('data-search-href');
+    }
+    return null;
+  }
+
+  /* ── 初始化 ── */
+  (function() {
+    var container = document.getElementById('ow-ring-container');
+    if (!container) return;
+
+    var isMobile = window.matchMedia('(max-width: 768px)').matches;
+    var dropSizes   = [52, 63, 74, 84];
+    var dropCounts  = [3, 3, 8, 8];
+    var radii       = [0.16, 0.28, 0.40, 0.52];
+    var fallbackSvg = '/illustrations/wudong.svg';
+    var rings = [];
+    var tooltip = document.getElementById('ow-tooltip');
+    var tooltipText = document.getElementById('ow-tooltip-text');
+
+    function build() {
+      var size = container.offsetWidth || 520;
+      var scale = size / 520;
+
+      for (var r = 0; r < 4; r++) {
+        var birds = BIRDS_BY_RING[r];
+        var count = dropCounts[r] || birds.length;
+        if (!count) continue;
+
+        var ringEl = document.createElement('div');
+        ringEl.className = 'ow-ring';
+        ringEl.setAttribute('data-ring', String(r));
+        ringEl.style.zIndex = String(4 - r);
+        container.appendChild(ringEl);
+
+        var radius = size * radii[r];
+        var dropW = dropSizes[r] * scale;
+
+        for (var i = 0; i < count; i++) {
+          var bird = birds[i % birds.length];
+          var angle = (360 / count) * i - 90;
+          var rad = (angle * Math.PI) / 180;
+          var x = Math.cos(rad) * radius;
+          var y = Math.sin(rad) * radius;
+          var rotDeg = angle + 180;
+
+          var drop = document.createElement('div');
+          drop.className = 'ow-drop';
+          drop.setAttribute('data-bird-id', bird.id);
+          drop.setAttribute('data-bird-name', bird.name);
+          drop.setAttribute('data-bird-search', bird.clickSearch);
+          drop.setAttribute('data-ring', String(r));
+          drop.style.width  = dropW + 'px';
+          drop.style.height = dropW + 'px';
+          drop.style.marginLeft = (-dropW / 2) + 'px';
+          drop.style.marginTop  = (-dropW / 2) + 'px';
+          drop.style.transform = 'translate(' + x + 'px, ' + y + 'px) rotate(' + rotDeg + 'deg)';
+
+          var svgPath = bird.svg;
+          var pngPath = svgPath.replace(/\.svg$/i, '.png');
+          var err = "if(this.src.endsWith('.svg')){this.src='" + pngPath + "'}else{this.onerror=null;this.src='" + fallbackSvg + "'}";
+          drop.innerHTML = '<img class="ow-drop-img" src="' + svgPath + '" alt="' + bird.name + '" width="' + dropW + '" height="' + dropW + '" onerror="' + err + '" />';
+
+          ringEl.appendChild(drop);
+        }
+        rings.push(ringEl);
+      }
+    }
+
+    /* ── PC ── */
+    function setupPC() {
+      container.addEventListener('mouseover', function(e) {
+        var drop = e.target ? e.target.closest('.ow-drop') : null;
+        if (!drop) return;
+        var ri = parseInt(drop.getAttribute('data-ring') || '0', 10);
+        if (rings[ri]) rings[ri].classList.add('ow-paused');
+        var name = drop.getAttribute('data-bird-name') || '鸟';
+        if (tooltip && tooltipText) {
+          tooltipText.textContent = '我是' + name;
+          tooltip.style.opacity = '1';
+        }
+      });
+      container.addEventListener('mouseout', function(e) {
+        var drop = e.target ? e.target.closest('.ow-drop') : null;
+        if (!drop) return;
+        var ri = parseInt(drop.getAttribute('data-ring') || '0', 10);
+        if (rings[ri]) rings[ri].classList.remove('ow-paused');
+        if (tooltip) tooltip.style.opacity = '0';
+      });
+      container.addEventListener('click', function(e) {
+        var drop = e.target ? e.target.closest('.ow-drop') : null;
+        if (!drop) return;
+        e.stopPropagation();
+        var search = drop.getAttribute('data-bird-search') || '';
+        window.location.href = findArticleHref(search) || '/category/niaoleibaohu';
+      });
+    }
+
+    /* ── 移动端 ── */
+    function setupMobile() {
+      var card = document.getElementById('ow-mobile-card');
+      var cardText = document.getElementById('ow-mobile-card-text');
+      var cardLink = document.getElementById('ow-mobile-card-link');
+      var cardClose = document.getElementById('ow-mobile-card-close');
+      container.addEventListener('click', function(e) {
+        var drop = e.target ? e.target.closest('.ow-drop') : null;
+        if (!drop) return;
+        e.stopPropagation();
+        var name = drop.getAttribute('data-bird-name') || '鸟';
+        var href = findArticleHref(drop.getAttribute('data-bird-search') || '') || '/category/niaoleibaohu';
+        if (card && cardText && cardLink) {
+          cardText.textContent = '我是' + name;
+          cardLink.href = href;
+          card.classList.remove('hidden');
+        }
+      });
+      if (cardClose) cardClose.addEventListener('click', function() {
+        if (card) card.classList.add('hidden');
+      });
+    }
+
+    build();
+    if (isMobile) setupMobile(); else setupPC();
+  })();
+</script>
