@@ -38,13 +38,13 @@ coverImage: /images/jiuxinghuzhu/five-years-anniversary.png
 
 在过去的五年中，我们见证了无数生命奇迹。以下是啾星志愿者团队近年来记录在册的典型救助案例：
 
-*   **小番茄救助案例**：\[点击查看微信公众号详细记录](https://mp.weixin.qq.com/s/7Cir8nXJSqGcIpatVdjc6w)
+*   **小番茄救助案例**：https://mp.weixin.qq.com/s/7Cir8nXJSqGcIpatVdjc6w
 
-*   **成都龙泉救助案例**：\[点击查看微信公众号详细记录](https://mp.weixin.qq.com/s/J9ljeA1jgeFwVjfq-gqXXA)
+*   **成都龙泉救助案例**：https://mp.weixin.qq.com/s/J9ljeA1jgeFwVjfq-gqXXA
 
-*   **南京植物园小虎皮救助案例**：\[点击查看微信公众号详细记录](https://mp.weixin.qq.com/s/w5mj812PtxJl3D\_lGJtz2g)
+*   **南京植物园小虎皮救助案例**：https://mp.weixin.qq.com/s/w5mj812PtxJl3D\_lGJtz2g
 
-*   **颅骨暴露小河重伤救助案例**：\[点击查看微信公众号详细记录](https://mp.weixin.qq.com/s/aPbkAT72WCcndn5Wwz6aYQ)
+*   **颅骨暴露小河重伤救助案例**：https://mp.weixin.qq.com/s/aPbkAT72WCcndn5Wwz6aYQ
 
 
 ## 历年救助成果缩影
@@ -108,7 +108,7 @@ coverImage: /images/jiuxinghuzhu/five-years-anniversary.png
 1\.  **安全安置，严禁洗澡**：可用镂空垃圾桶、塑料筐倒扣，或用戳了洞的纸箱安置，并将其放在关好门窗的封闭室内。**切记：千万不要给鸟洗澡！**
 
 2\.  **尽快喂食防止饿死**：鹦鹉新陈代谢极快，极易饿死！请尽快喂食，最好喂 **黄小米 / 燕麦米和凉白开**。
-
+     
 3\.  **注意温度与保暖**：请勿让鸟直晒烈日或直吹空调。气温高于30°C需防暑，低于20°C则需要防风保暖。
 
 4\.  **家里有宠物的必须隔离**：家里如有猫、狗或原住民小鸟，请务必分房隔离安置，严防应激、传染病或捕杀。

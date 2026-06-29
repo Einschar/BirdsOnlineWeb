@@ -25,15 +25,15 @@ interface Props {
 const { title, summary, tags, publishDate } = Astro.props;
 ---
 
-<header class="mb-12 text-center">
+<header class="mb-12">
   <!-- 文章主标题 -->
-  <h1 class="font-display text-3xl lg:text-4xl font-extrabold text-neutral-text-heading mb-4 leading-tight">
+  <h1 class="font-display text-3xl lg:text-4xl font-extrabold text-neutral-text-heading mb-4 leading-tight text-center">
     {title}
     <span class="section-underline" style="margin: 0.5rem auto 0;"></span>
   </h1>
 
   <!-- 一句话简介 -->
-  <p class="text-lg text-neutral-text-secondary max-w-2xl mx-auto mb-6 leading-relaxed">
+  <p class="text-lg text-neutral-text-secondary max-w-2xl mx-auto mb-6 leading-relaxed ">
     {summary}
   </p>
 

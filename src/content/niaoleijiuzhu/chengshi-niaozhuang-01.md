@@ -1,15 +1,18 @@
 ---
-title: 城市鸟撞防护指南：让玻璃幕墙不再致命
+title: 城市鸟撞防护指南：让玻璃幕墙不再致命【待补充替换科普内容】
 category: 鸟类救助
 subcategory: 城市鸟撞防护指南
 tags: [鸟撞, 玻璃幕墙, 城市生态, 防护措施]
-summary: 每年数十亿只鸟类因撞击玻璃建筑而死亡。了解鸟撞的原因，并学习如何通过简单改造让城市建筑对鸟类更友好。
-publishDate: 2025-06-06
+summary: 每年数十亿只鸟类因撞击玻璃建筑而死亡。了解鸟撞的原因，并学习如何通过简单改造让城市建筑对鸟类更友好。作者：Fu404NFound
+coverImage: /images/niaoleijiuzhu/Urban-Bird-Collision-Prevention1.jpg
+publishDate: 2026-06-06
+
 ---
 
 ## 鸟撞问题的严重性
 
 鸟类撞击玻璃建筑是**全球鸟类非自然死亡的第二大原因**（仅次于猫的捕食）。据研究估计，仅美国每年就有 3.6 亿至 10 亿只鸟死于玻璃撞击。
+<img src="/images/niaoleijiuzhu/Urban-Bird-Collision-Prevention2.jpg" alt="城市鸟撞防护" width="400" >
 
 在中国，随着城市化加速和玻璃幕墙建筑的普及，鸟撞问题日益严重。每年春秋迁徙季是鸟撞高发期。
 
@@ -38,6 +41,8 @@ publishDate: 2025-06-06
 <Callout type="tip">
   防鸟撞贴纸不一定是丑陋的！现在有紫外线反射贴纸（人眼看不见但鸟类可见），也有各种美观的设计图案。美观与功能可以兼得。
 </Callout>
+
+<img src="/images/niaoleijiuzhu/Urban-Bird-Collision-Prevention1.jpg" alt="城市鸟撞防护" width="400" >
 
 ## 发现撞窗受伤的鸟怎么办
 
