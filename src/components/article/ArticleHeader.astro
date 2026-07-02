@@ -11,7 +11,8 @@
   - title: 文章标题
   - summary: 一句话简介
   - tags: 标签数组
-  - publishDate: 发布日期
+  - articleAuthor: 文章作者
+  - coverAuthor: 图片/配图作者
 -->
 
 ---
@@ -19,10 +20,12 @@ interface Props {
   title: string;
   summary: string;
   tags: string[];
-  publishDate: Date;
+  articleAuthor: string;
+  coverAuthor: string;
+
 }
 
-const { title, summary, tags, publishDate } = Astro.props;
+const { title, summary, tags, articleAuthor, coverAuthor } = Astro.props;
 ---
 
 <header class="mb-12">
@@ -37,25 +40,27 @@ const { title, summary, tags, publishDate } = Astro.props;
     {summary}
   </p>
 
-  <!-- 标签 + 发布日期 -->
+  <!-- 标签 + 作者信息 -->
   <div class="flex flex-wrap items-center justify-center gap-3">
     <!-- 检索分类标签 -->
     {tags.length > 0 && (
       <div class="flex flex-wrap justify-center gap-2">
         {tags.map((tag: string) => (
           <span class="px-3 py-1 text-xs font-medium rounded-full border border-brand-green/30 text-brand-green-dark">
-            #{tag}
+            {tag}
           </span>
         ))}
       </div>
     )}
 
-    <!-- 发布日期 -->
-    <time
-      datetime={publishDate.toISOString()}
-      class="text-sm text-neutral-text-secondary"
-    >
-      发布于 {publishDate.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
-    </time>
+    <!-- 文章作者 -->
+    <span class="text-sm text-neutral-text-secondary">
+      文 / {articleAuthor}
+    </span>
+
+    <!-- 图片作者 -->
+    <span class="text-sm text-neutral-text-secondary">
+      图 / {coverAuthor}
+    </span>
   </div>
 </header>

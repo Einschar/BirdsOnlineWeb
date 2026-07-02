@@ -41,6 +41,10 @@ const articleSchema = z.object({
   draft: z.boolean().optional().default(false),
   /** 封面配图路径（可选，用于文章卡片） */
   coverImage: z.string().optional(),
+  /** 文章作者（可选，显示"文 / xxx"） */
+  articleAuthor: z.string().optional().default(''),
+  /** 图片/配图作者（可选，显示"图 / xxx"） */
+  coverAuthor: z.string().optional().default(''),
 });
 
 /**

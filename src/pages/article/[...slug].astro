@@ -83,7 +83,7 @@ if (!article) {
 }
 
 const topic = getTopicBySlug(collectionName);
-const { title, summary, tags = [], publishDate } = article.data;
+const { title, summary, tags = [], publishDate, articleAuthor, coverAuthor } = article.data;
 
 /**
  * 作用：使用 render() 将 Markdown 正文渲染为 HTML
@@ -102,7 +102,7 @@ const { Content } = await render(article as any);
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- 文章头部信息（标题、简介、标签） -->
-    <ArticleHeader title={title} summary={summary} tags={tags} publishDate={publishDate} />
+    <ArticleHeader title={title} summary={summary} tags={tags} publishDate={publishDate} articleAuthor={articleAuthor || ''} coverAuthor={coverAuthor || ''} />
 
     <!-- PC 端左右双栏布局 | 移动端单栏 -->
     <div class="flex flex-col lg:flex-row gap-8">

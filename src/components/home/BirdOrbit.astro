@@ -139,7 +139,8 @@
        name    — 鸟名（气泡显示 "我是[name]"）
        img     — 图片路径（public/illustrations/ 下）
        ring    — 圈层 (0=最内圈, 1, 2, 3=最外圈)
-       keyword — 点击后搜索文章的关键词，匹配文章标题/标签
+       link    — 直接跳转链接（优先级高），填 '' 则使用 keyword 搜索
+       keyword — 搜索关键词（link 为空时启用），匹配文章标题/标签
    ══════════════════════════════════════════════════════════ */
   /*
     可用图片资源（public/illustrations/ 下）：
@@ -147,34 +148,34 @@
   */
   var BIRD_DATA = [
     // ── 圈 0（内圈 · 3 只） ──
-    { name:'白玄凤',     img:'/illustrations/玄凤-白.png',      ring:0, keyword:'玄凤' },
-    { name:'黄化玄凤',   img:'/illustrations/玄凤-黄化.png',    ring:0, keyword:'玄凤' },
-    { name:'麻雀',       img:'/illustrations/麻雀.png',         ring:0, keyword:'麻雀' },
+    { name:'白玄凤',     img:'/illustrations/玄凤-白.png',      ring:0, link:'/category/yangniaorichang/' },
+    { name:'黄化玄凤',   img:'/illustrations/玄凤-黄化.png',    ring:0, link:'/category/yangniaorichang/' },
+    { name:'麻雀',       img:'/illustrations/麻雀.png',         ring:0, link:'', keyword:'麻雀' },
 
     // ── 圈 1（3 只） ──
-    { name:'勺嘴鹬',   img:'/illustrations/勺嘴鹬.png',    ring:1, keyword:'勺嘴鹬' },
-    { name:'虎皮鹦鹉',       img:'/illustrations/虎皮鹦鹉.png',         ring:1, keyword:'虎皮鹦鹉' },
-    { name:'翠鸟',       img:'/illustrations/翠鸟.png',         ring:1, keyword:'翠鸟' },
+    { name:'勺嘴鹬',   img:'/illustrations/勺嘴鹬.png',    ring:1, link:'/article/niaoleibaohu/shiyou-wuran-01/' },
+    { name:'虎皮鹦鹉',       img:'/illustrations/虎皮鹦鹉.png',         ring:1, link:'', keyword:'虎皮鹦鹉' },
+    { name:'翠鸟',       img:'/illustrations/翠鸟.png',         ring:1, link:'', keyword:'翠鸟' },
 
     // ── 圈 2（8 只） ──
-    { name:'红喉潜鸟',   img:'/illustrations/红喉潜鸟.png',    ring:2, keyword:'潜鸟' },
-    { name:'小太阳',     img:'/illustrations/小太阳.png',       ring:2, keyword:'鹦鹉' },
-    { name:'画眉',       img:'/illustrations/画眉.png',         ring:2, keyword:'画眉' },
-    { name:'普通鸬鹚',   img:'/illustrations/普通鸬鹚.png',    ring:2, keyword:'鸬鹚' },
-    { name:'牡丹鹦鹉',   img:'/illustrations/牡丹鹦鹉.png',    ring:2, keyword:'牡丹鹦鹉' },
-    { name:'欧亚鸲',     img:'/illustrations/欧亚鸲.png',       ring:2, keyword:'鸲' },
-    { name:'白头鹎',       img:'/illustrations/白头鹎.png',         ring:2, keyword:'白头鹎' },
-    { name:'喜鹊',       img:'/illustrations/喜鹊.png',         ring:2, keyword:'喜鹊' },
+    { name:'红喉潜鸟',   img:'/illustrations/红喉潜鸟.png',    ring:2, link:'', keyword:'潜鸟' },
+    { name:'小太阳',     img:'/illustrations/小太阳.png',       ring:2,  link:'/category/yangniaorichang/' },
+    { name:'画眉',       img:'/illustrations/画眉.png',         ring:2, link:'', keyword:'画眉' },
+    { name:'普通鸬鹚',   img:'/illustrations/普通鸬鹚.png',    ring:2, link:'', keyword:'鸬鹚' },
+    { name:'牡丹鹦鹉',   img:'/illustrations/牡丹鹦鹉.png',    ring:2, link:'', keyword:'牡丹鹦鹉' },
+    { name:'欧亚鸲',     img:'/illustrations/欧亚鸲.png',       ring:2, link:'', keyword:'鸲' },
+    { name:'白头鹎',       img:'/illustrations/白头鹎.png',         ring:2, link:'', keyword:'白头鹎' },
+    { name:'喜鹊',       img:'/illustrations/喜鹊.png',         ring:2, link:'', keyword:'喜鹊' },
 
     // ── 圈 3（外圈 · 8 只） ──
-    { name:'红隼',       img:'/illustrations/红隼.png',         ring:3, keyword:'红隼' },
-    { name:'白玄凤',     img:'/illustrations/玄凤-白.png',      ring:3, keyword:'玄凤' },
-    { name:'夜鹭',       img:'/illustrations/夜鹭.png',         ring:3, keyword:'夜鹭' },
-    { name:'红喉潜鸟',   img:'/illustrations/红喉潜鸟.png',    ring:3, keyword:'潜鸟' },
-    { name:'乌鸫',       img:'/illustrations/乌鸫.png',         ring:3, keyword:'乌鸫' },
-    { name:'黄腰柳莺',   img:'/illustrations/黄腰柳莺.png',    ring:3, keyword:'柳莺' },
-    { name:'暗绿绣眼',   img:'/illustrations/暗绿绣眼.png',    ring:3, keyword:'绣眼' },
-    { name:'翠鸟',       img:'/illustrations/翠鸟.png',         ring:3, keyword:'翠鸟' },   
+    { name:'红隼',       img:'/illustrations/红隼.png',         ring:3, link:'', keyword:'红隼' },
+    { name:'白玄凤',     img:'/illustrations/玄凤-白.png',      ring:3, link:'', keyword:'玄凤' },
+    { name:'夜鹭',       img:'/illustrations/夜鹭.png',         ring:3, link:'', keyword:'夜鹭' },
+    { name:'红喉潜鸟',   img:'/illustrations/红喉潜鸟.png',    ring:3, link:'', keyword:'潜鸟' },
+    { name:'乌鸫',       img:'/illustrations/乌鸫.png',         ring:3, link:'', keyword:'乌鸫' },
+    { name:'黄腰柳莺',   img:'/illustrations/黄腰柳莺.png',    ring:3, link:'', keyword:'柳莺' },
+    { name:'暗绿绣眼',   img:'/illustrations/暗绿绣眼.png',    ring:3, link:'', keyword:'绣眼' },
+    { name:'翠鸟',       img:'/illustrations/翠鸟.png',         ring:3, link:'', keyword:'翠鸟' },   
   ];
 
   /* ── 按圈层分组 ── */
@@ -201,6 +202,14 @@
       if (summary.includes(kw)) return el.getAttribute('data-search-href');
     }
     return null;
+  }
+
+  /* ── 获取跳转链接：优先 link 字段 → 回退 keyword 搜索 → 默认专题页 ── */
+  function getDropHref(drop) {
+    var link = drop.getAttribute('data-bird-link') || '';
+    if (link) return link;
+    var keyword = drop.getAttribute('data-bird-keyword') || '';
+    return findArticleHref(keyword) || '/category/niaoleibaohu';
   }
 
   /* ── 初始化转盘 ── */
@@ -248,7 +257,8 @@
           var drop = document.createElement('div');
           drop.className = 'bo-drop';
           drop.setAttribute('data-bird-name', bird.name);
-          drop.setAttribute('data-bird-keyword', bird.keyword);
+          drop.setAttribute('data-bird-keyword', bird.keyword || '');
+          drop.setAttribute('data-bird-link', bird.link || '');
           drop.setAttribute('data-ring', String(r));
           drop.style.width  = dropW + 'px';
           drop.style.height = dropW + 'px';
@@ -293,8 +303,7 @@
         var drop = e.target ? e.target.closest('.bo-drop') : null;
         if (!drop) return;
         e.stopPropagation();
-        var keyword = drop.getAttribute('data-bird-keyword') || '';
-        window.location.href = findArticleHref(keyword) || '/category/niaoleibaohu';
+        window.location.href = getDropHref(drop);
       });
     }
 
@@ -309,8 +318,7 @@
         if (!drop) return;
         e.stopPropagation();
         var name = drop.getAttribute('data-bird-name') || '鸟';
-        var keyword = drop.getAttribute('data-bird-keyword') || '';
-        var href = findArticleHref(keyword) || '/category/niaoleibaohu';
+        var href = getDropHref(drop);
         if (card && cardText && cardLink) {
           cardText.textContent = '我是' + name;
           cardLink.href = href;

@@ -1,5 +1,5 @@
 ---
-title: 文明观鸟规范：不打扰是最好的保护
+title: CBBS城市繁殖鸟类调查【待补充修改科普内容】
 category: 观鸟指南
 subcategory: 文明观鸟规范
 tags: [观鸟礼仪, 文明观鸟, 鸟类保护]
