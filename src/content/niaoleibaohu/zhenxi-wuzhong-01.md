@@ -4,7 +4,7 @@ category: 鸟类保护
 subcategory: 珍稀物种专项科普
 tags: [珍稀鸟类, 濒危物种, 中国鸟类, 生物多样性]
 summary: 中国是世界上鸟类种类最丰富的国家之一，也是众多珍稀濒危鸟类的家园。了解这些鸟类的生存现状，认识保护它们的紧迫性。
-publishDate: 2025-06-15
+coverImage: /images/niaoleibaohu/longYang.jpg
 ---
 
 ## 中国：鸟类多样性的宝库

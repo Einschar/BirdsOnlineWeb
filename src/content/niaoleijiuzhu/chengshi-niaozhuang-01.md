@@ -5,7 +5,6 @@ subcategory: 城市鸟撞防护指南
 tags: [鸟撞, 玻璃幕墙, 城市生态, 防护措施]
 summary: 每年数十亿只鸟类因撞击玻璃建筑而死亡。了解鸟撞的原因，并学习如何通过简单改造让城市建筑对鸟类更友好。
 coverImage: /images/niaoleijiuzhu/Urban-Bird-Collision-Prevention1.jpg
-publishDate: 2026-06-14
 articleAuthor: 阿枭 烟柳莺
 coverAuthor: Fu404NFound
 ---

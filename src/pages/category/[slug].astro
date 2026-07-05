@@ -101,9 +101,11 @@ const articles = await getArticlesByCategory(slug!);
               <!-- 卡片文字内容 -->
               <div class="p-5">
                 <!-- 日期 -->
-                <time datetime={article.data.publishDate.toISOString()} class="text-xs text-neutral-text-secondary">
-                  {article.data.publishDate.toLocaleDateString('zh-CN')}
-                </time>
+                {article.data.publishDate && (
+                  <time datetime={article.data.publishDate.toISOString()} class="text-xs text-neutral-text-secondary">
+                    {article.data.publishDate.toLocaleDateString('zh-CN')}
+                  </time>
+                )}
 
                 <!-- 文章标题 -->
                 <h3 class="text-lg font-bold text-neutral-text-heading group-hover:text-brand-green-dark transition-colors mt-2 mb-2 line-clamp-2">

@@ -4,7 +4,6 @@ category: 养鸟日常
 subcategory: 疾病预防
 tags: [疾病, 预防, 健康护理]
 summary: 了解宠物鸟最常见的几种疾病症状、成因和预防措施，做到早发现、早处理，守护鸟儿健康。
-publishDate: 2025-06-05
 coverImage: /images/yangniaorichang/bird-health.svg
 ---
 

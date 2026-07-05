@@ -3,8 +3,8 @@ title: 捕鸟网、弹弓打鸟、盗猎【待补充修改科普内容】
 category: 鸟类保护
 subcategory: 非法伤害行为科普
 tags: [捕鸟网, 非法捕猎, 迁徙通道]
-summary: 捕鸟网是鸟类迁徙路上最致命的陷阱之一。了解捕鸟网的危害、相关法律法规，以及公民如何发现和举报。
-publishDate: 2025-06-04
+summary: 捕鸟网是鸟类迁徙路上最致命的陷阱之一。了解捕鸟网的危害、相关法律法规，以及公民如何发现和举报
+coverImage: /images/niaoleibaohu/buniao-wang01.jpg
 ---
 
 ## 什么是捕鸟网

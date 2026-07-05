@@ -4,8 +4,7 @@ category: 养鸟日常
 subcategory: 繁殖鸟类调查
 tags: [繁殖, 福利, 伦理]
 summary: 鸟类繁殖并非简单的"给个窝就行"。了解科学繁育知识，确保亲鸟和雏鸟的健康与福利。
-publishDate: 2025-06-10
-coverImage: /images/yangniaorichang/bird-breeding.svg
+coverImage: /images/yangniaorichang/xuanfeng.png
 ---
 
 ## 繁殖前必须考虑的问题

@@ -55,9 +55,11 @@ export async function getArticlesByCategory(category: string): Promise<ArticleEn
   return articles
     .filter((a) => !a.data.draft)
     .sort(
-      (a, b) =>
-        new Date(b.data.publishDate).getTime() -
-        new Date(a.data.publishDate).getTime()
+      (a, b) => {
+        var da = a.data.publishDate ? new Date(a.data.publishDate).getTime() : 0;
+        var db = b.data.publishDate ? new Date(b.data.publishDate).getTime() : 0;
+        return db - da;
+      }
     );
 }
 

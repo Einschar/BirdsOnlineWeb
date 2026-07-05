@@ -35,8 +35,8 @@ const articleSchema = z.object({
   tags: z.array(z.string()).optional().default([]),
   /** 一句话简介（必填，用于卡片列表展示和 SEO description） */
   summary: z.string(),
-  /** 发布日期（必填，用于排序） */
-  publishDate: z.date(),
+  /** 发布日期（可选，用于排序，不填则不显示日期） */
+  publishDate: z.date().optional(),
   /** 是否为草稿（可选，草稿不显示在列表和搜索中） */
   draft: z.boolean().optional().default(false),
   /** 封面配图路径（可选，用于文章卡片） */
