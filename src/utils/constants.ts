@@ -40,11 +40,11 @@ export const TOPICS: TopicInfo[] = [
   },
   {
     slug: 'niaoleijiuzhu',
-    name: '鸟类救助',
+    name: '人鸟相处',
     icon: '/images/icon/夜鹭.png',
-    shortIntro: '受伤野鸟紧急救助指南',
+    shortIntro: '人与自然和谐共处',
     longIntro:
-      '偶遇受伤野鸟时的标准化救助流程，从观察评估到安全转运。掌握正确的急救知识，在关键时刻为鸟儿争取生存机会。',
+      '探索人与鸟类在城市与自然中的相处之道，涵盖野鸟救助、城市鸟撞防护、人与鸟类冲突的解决思路，以及如何在日常生活中为鸟类创造安全的生存空间。',
     illustration: '/illustrations/topic-jiuzhu.svg',
   },
   {

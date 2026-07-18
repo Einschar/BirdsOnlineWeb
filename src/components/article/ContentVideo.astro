@@ -8,12 +8,29 @@
   关联文件：
   - src/pages/article/[...slug].astro（文章页 Markdown shortcode 调用）
 
-  使用方式（在 markdown 中）：
-  <VideoEmbed url="https://player.bilibili.com/player.html?bvid=XXX" title="视频标题说明" />
+  -使用方式（在 markdown 中）：
+  <div class="video-wrapper">
+  <iframe src="B站iframe地址" allowfullscreen title="视频标题"></iframe>
+</div>
 
   Props:
   - url: B站 iframe 地址（必填）
   - title: 视频标题说明（可选）
+
+-获取 B 站 iframe 地址：
+
+1.打开 B 站视频 → 点击分享 → 复制 嵌入代码
+2.取嵌入代码中的 src="..." 链接填入
+<div class="video-wrapper">
+  <iframe src="https://player.bilibili.com/player.html?bvid=BV1ZBM86TEaP" allowfullscreen title="鹦闻联播｜正在消失的勺嘴鹬"></iframe>
+</div>
+
+
+-注意：
+
+class="video-wrapper" 必须写，否则没有 16:9 比例样式
+不要用 <VideoEmbed> 组件语法，Astro 渲染器不认识它
+
 -->
 
 ---

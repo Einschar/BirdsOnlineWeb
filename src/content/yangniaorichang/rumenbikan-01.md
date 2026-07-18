@@ -4,7 +4,9 @@ category: 养鸟日常
 subcategory: 入门必看
 tags: [养鸟准备, 新手养鸟, 养鸟攻略, 鹦鹉, 和小鸟的贴贴日常, 小鸟友好计划]
 summary: 小鸟依人虽可爱，是温馨可爱的陪伴，更是一份需要饲养者担负起来的责任。在决定把小鸟带回家前，请再三确认，自己是否准备好了。
-coverImage: /images/yangniaorichang/bird-cage-setup.svg
+coverImage: /images/yangniaorichang/YangNiaoFeng.png
+articleAuthor: 超吉祥
+coverAuthor: kk
 ---
 
 ## 养鸟有门槛吗？
@@ -50,7 +52,7 @@ coverImage: /images/yangniaorichang/bird-cage-setup.svg
 小鸟到家后会紧张，建议把笼子放在安静的地方，不要频繁打扰，让小鸟自己适应环境。
 
 
-  需要注意的情况：
+### 需要注意的情况：
 - **散养需注意** 窗户、风扇、开关门，甚至马桶、水杯等等，都是很大的风险。小鸟的好奇心很重，因为散养导致的死亡事件非常之多，请务必负起责任。
 - **温度** 小鸟在15°~28°的环境中感到舒适，夏季注意通风降温，冬季注意保暖。
 - **应激** 突然的噪音、强光和频繁更替环境，都可能导致小鸟应激生病。
@@ -58,5 +60,9 @@ coverImage: /images/yangniaorichang/bird-cage-setup.svg
 - **不要轻易外带** 没有措施不要外带，放飞绳有风险。推荐夏季通风冬季保暖的外出笼。  
 
 
-关于互动我们会在后面的篇章讲到，如有想了解的宠物鸟知识，欢迎告诉我们！
+关于互动我们会在后面的篇章讲到，如有想了解的宠物鸟知识，欢迎告诉我们！  
 
+
+
+
+<img src="/images/yangniaorichang/YangBirds1.jpg" alt="养鸟1" width="800" >

@@ -4,7 +4,7 @@ category: 鸟类保护
 subcategory: 宠物鸟救助与科学饲养科普
 tags: [啾星互助网, 鹦鹉救助, 科学饲养, 抵制野鸟, 流浪动物]
 summary: 啾星互助网即将迎来成立五周年。作为非营利性民间组织，我们致力于全国流浪鹦鹉的实地救助与科学饲养普及。本文将带您走进救助一线，并科普“捡到鹦鹉怎么办”的保姆级新手指南。
-coverImage: /images/jiuxinghuzhu/five-years-anniversary.png
+coverImage: /images/yangniaorichang/Q1.jpg
 ---
 
 ## 一、什么是啾星互助网？
@@ -14,6 +14,8 @@ coverImage: /images/jiuxinghuzhu/five-years-anniversary.png
 > 我们的使命与宗旨：
 > 1. 尽可能的帮助全国各地走失或被遗弃的合法宠物小鹦鹉，为它们找到安全可靠的归宿，免于继续流浪街头死于非命。
 > 2. 多渠道宣传科学饲养理念，让更多饲主选择对鹦鹉更为健康有益的饲养方式。
+
+<img src="/images/yangniaorichang/Q1.jpg" alt="啾星互助网" width="400" >
 
 
 ### 啾星互助网运行核心原则
@@ -48,19 +50,18 @@ coverImage: /images/jiuxinghuzhu/five-years-anniversary.png
 
 以下为我们两周年及四周年的部分救助案例海报墙，每一个方格的背后，都是一双被志愿者和好心人从生死边缘拉回来的翅膀。
 
-!\[啾星两周年部分流浪小鹦鹉救助案例展示](/images/jiuxinghuzhu/2nd-anniversary-cases.png)
+<img src="/images/yangniaorichang/Q2.jpg" alt="啾星互助网两周年流浪小鹦鹉救助案例展示" width="400" >
+<img src="/images/yangniaorichang/Q3.jpg" alt="啾星互助网两周年流浪小鹦鹉救助案例展示" width="400" >
+<img src="/images/yangniaorichang/Q4.jpg" alt="啾星互助网两周年流浪小鹦鹉救助案例展示" width="400" >
+<img src="/images/yangniaorichang/Q5.jpg" alt="啾星互助网两周年流浪小鹦鹉救助案例展示" width="400" >
+<img src="/images/yangniaorichang/Q8.png" alt="啾星互助网两周年流浪小鹦鹉救助案例展示" width="400" >
 
-*(图：啾星互助网两周年流浪小鹦鹉救助案例展示)*
 
-!\[啾星四周年部分流浪小鹦鹉救助案例展示](/images/jiuxinghuzhu/4th-anniversary-cases.png)
+> 交流社区互动:除了紧急救助，我们还会吸纳有意愿进行科学养育的养鸟人进入我们的【科养交流社群】。  
+> 想要学习更多科学用具、疾病预防与日常行为训练，欢迎加入我们：
+> https://mp.weixin.qq.com/s/SR4-HhdUJKSmzV3XKzYalA
 
-*(图：啾星互助网四周年流浪小鹦鹉救助案例展示)*
 
-<Callout type="tip">
-
- 交流社区互动:除了紧急救助，我们还会吸纳有意愿进行科学养育的养鸟人进入我们的【科养交流社群】。想要学习更多科学用具、疾病预防与日常行为训练，欢迎加入我们：\[点击加入啾星科养交流群](https://mp.weixin.qq.com/s/SR4-HhdUJKSmzV3XKzYalA)
-
-</Callout>
 
 
 ---
@@ -130,7 +131,7 @@ coverImage: /images/jiuxinghuzhu/five-years-anniversary.png
 
 如果你在户外看到长得像下图一样的弯钩嘴小鸟，不用怀疑，**它们 99% 都是饲养逃逸或被遗弃的宠物鹦鹉！**
 
-!\[户外流浪宠物鹦鹉常见外观对比](/images/jiuxinghuzhu/pet-bird-guide.png)
+<img src="/images/yangniaorichang/Q7.png" alt="捡到鹦鹉" width="800" >
 
 > **敲重点**：不管啥品种、啥大小的，只要是个鹦鹉肯定就是 **弯钩嘴形状的嘴巴**！虽然国内有少部分野生鹦鹉分布，但野生鹦鹉被普通人捡到的概率微乎其微。宠物鸟在野外毫无生存能力，极易被流浪猫扑杀或活活饿死。**放生宠物鸟 = 杀生！请看到了务必捡走先收留！！！**
 

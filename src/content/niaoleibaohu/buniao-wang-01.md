@@ -5,6 +5,7 @@ subcategory: 非法伤害行为科普
 tags: [捕鸟网, 非法捕猎, 迁徙通道]
 summary: 捕鸟网是鸟类迁徙路上最致命的陷阱之一。了解捕鸟网的危害、相关法律法规，以及公民如何发现和举报
 coverImage: /images/niaoleibaohu/buniao-wang01.jpg
+coverAuthor:  栗树鸭BioArt
 ---
 
 ## 什么是捕鸟网
