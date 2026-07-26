@@ -60,8 +60,8 @@ export const collections = {
     loader: glob({ pattern: '**/*.md', base: './src/content/guanniaozhinan' }),
     schema: articleSchema,
   }),
-  niaoleijiuzhu: defineCollection({
-    loader: glob({ pattern: '**/*.md', base: './src/content/niaoleijiuzhu' }),
+  renniaoxiangchu: defineCollection({
+    loader: glob({ pattern: '**/*.md', base: './src/content/renniaoxiangchu' }),
     schema: articleSchema,
   }),
   niaoleibaohu: defineCollection({

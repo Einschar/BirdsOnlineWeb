@@ -39,7 +39,7 @@ export const TOPICS: TopicInfo[] = [
     illustration: '/illustrations/topic-guanniao.svg',
   },
   {
-    slug: 'niaoleijiuzhu',
+    slug: 'renniaoxiangchu',
     name: '人鸟相处',
     icon: '/images/icon/夜鹭.png',
     shortIntro: '人与自然和谐共处',

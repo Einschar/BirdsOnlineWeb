@@ -18,14 +18,14 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 export const COLLECTIONS = [
   'yangniaorichang',
   'guanniaozhinan',
-  'niaoleijiuzhu',
+  'renniaoxiangchu',
   'niaoleibaohu',
 ] as const;
 
 export type CollectionName = (typeof COLLECTIONS)[number];
 
 /** 联合类型：涵盖所有文章集合 */
-type ArticleEntry = CollectionEntry<'yangniaorichang' | 'guanniaozhinan' | 'niaoleijiuzhu' | 'niaoleibaohu'>;
+type ArticleEntry = CollectionEntry<'yangniaorichang' | 'guanniaozhinan' | 'renniaoxiangchu' | 'niaoleibaohu'>;
 
 /**
  * 获取指定专题的所有文章，按发布日期倒序排列
@@ -42,8 +42,8 @@ export async function getArticlesByCategory(category: string): Promise<ArticleEn
     case 'guanniaozhinan':
       articles = await getCollection('guanniaozhinan') as any;
       break;
-    case 'niaoleijiuzhu':
-      articles = await getCollection('niaoleijiuzhu') as any;
+    case 'renniaoxiangchu':
+      articles = await getCollection('renniaoxiangchu') as any;
       break;
     case 'niaoleibaohu':
       articles = await getCollection('niaoleibaohu') as any;
@@ -70,7 +70,7 @@ export async function getArticlesByCategory(category: string): Promise<ArticleEn
 export async function getAllArticles(): Promise<ArticleEntry[]> {
   const articles1 = await getCollection('yangniaorichang');
   const articles2 = await getCollection('guanniaozhinan');
-  const articles3 = await getCollection('niaoleijiuzhu');
+  const articles3 = await getCollection('renniaoxiangchu');
   const articles4 = await getCollection('niaoleibaohu');
 
   const allArticles: ArticleEntry[] = [

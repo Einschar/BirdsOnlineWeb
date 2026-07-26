@@ -5,7 +5,7 @@ subcategory: 勺嘴鹬科普与栖息地保护
 tags: [勺嘴鹬, 一级保护鸟类, 滨海湿地, 候鸟迁徙, 生态保护监督]
 summary: 勺嘴鹬全球种群不足400只，是极度濒危珍稀候鸟，本文完整介绍物种特征、迁徙习性、生存困境、现有保护举措及公众合法参与保护的方式。
 coverImage: /images/niaoleibaohu/aishaozuiju2.jpg
-articleAuthor:  ？
+articleAuthor:  cyno
 coverAuthor:  啊jio、蘑菇咕
 ---
 

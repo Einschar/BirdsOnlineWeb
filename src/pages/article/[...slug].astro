@@ -46,7 +46,7 @@ export async function getStaticPaths() {
   const collections = [
     { name: 'yangniaorichang' as const, articles: await getCollection('yangniaorichang') },
     { name: 'guanniaozhinan' as const, articles: await getCollection('guanniaozhinan') },
-    { name: 'niaoleijiuzhu' as const, articles: await getCollection('niaoleijiuzhu') },
+    { name: 'renniaoxiangchu' as const, articles: await getCollection('renniaoxiangchu') },
     { name: 'niaoleibaohu' as const, articles: await getCollection('niaoleibaohu') },
   ];
 
@@ -69,7 +69,7 @@ const [collectionName, ...articleIdParts] = slugParts;
 const articleId = articleIdParts.join('/');
 
 // 验证 collectionName 是否有效
-const validCollections = ['yangniaorichang', 'guanniaozhinan', 'niaoleijiuzhu', 'niaoleibaohu'];
+const validCollections = ['yangniaorichang', 'guanniaozhinan', 'renniaoxiangchu', 'niaoleibaohu'];
 if (!collectionName || !validCollections.includes(collectionName)) {
   return new Response(null, { status: 404, statusText: '专题不存在' });
 }
