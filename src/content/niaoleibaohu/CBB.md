@@ -6,8 +6,6 @@ tags: [城市鸟类, 繁殖鸟类调查, 鸟类科普]
 summary: 本文科普介绍CBBS中国城市繁殖鸟类调查项目的核心意义、志愿者分工、参与收获与招募方式，解读全民志愿监测如何助力城市鸟类种群调研、栖息地保护与生态政策优化，为自然爱好者提供零门槛的鸟类保护参与渠道。
 coverImage: /images/niaoleibaohu/aiCBB.png
 articleAuthor: Noctis
-coverAuthor:?
-coverImage: /images/niaoleijiuzhu/cat.jpg
 ---
 
 ## 什么是CBBS鸟类调查项目？

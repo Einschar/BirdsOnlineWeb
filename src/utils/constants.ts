@@ -70,5 +70,5 @@ export function getTopicBySlug(slug: string): TopicInfo | undefined {
  * 站点全局信息
  * TODO: 替换为实际网站名称和描述
  */
-export const SITE_NAME = '鸟类科普网';
+export const SITE_NAME = 'BirdsOnly鸟类科普';
 export const SITE_DESCRIPTION = '专注鸟类科普，探索羽翼世界的奇妙';

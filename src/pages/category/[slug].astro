@@ -3,7 +3,7 @@
   - 四大专题各自独立的文章列表入口页
   - 展示该专题下全部科普文章，卡片流布局
   - PC 端三列网格，移动端单列竖向排列
-  - 动态路由：[slug] 对应 yangniaorichang / guanniaozhinan / niaoleijiuzhu / niaoleibaohu
+  - 动态路由：[slug] 对应 yangniaorichang / guanniaozhinan / renniaoxiangchu / niaoleibaohu
 
   视觉风格：纯白背景 + 细边框卡片 + 微妙阴影 + 绿色点缀
   参考设计图2、3的卡片样式
@@ -47,7 +47,7 @@ if (!topic) {
 const articles = await getArticlesByCategory(slug!);
 ---
 
-<BaseLayout title={`${topic.name} - 鸟类科普网`} description={topic.longIntro}>
+<BaseLayout title={`${topic.name} - BirdsOnly鸟类科普`} description={topic.longIntro}>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- 专题头部信息：简洁文字 + 底部绿色装饰线 -->
     <div class="text-center mb-12">
