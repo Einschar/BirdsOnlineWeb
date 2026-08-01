@@ -2,7 +2,11 @@
 title: 当鸟巢里出现了塑料袋
 category: 鸟类保护
 subcategory: 城市生态生态科普
+<<<<<<< HEAD:src/content/renniaoxiangchu/BirdsChao.md
 tags: [城市鸟类,鸟类适应性,鸟巢污染,微塑料,市化生态影响,乌鸫,白头鹎]
+=======
+tags: [城市鸟类, 鸟类适应性, 鸟巢污染, 微塑料, 城市化生态影响, 乌鸫, 白头鹎]
+>>>>>>> 01bc0c68e31a0b489a860feaefbe7a0010aa1a88:src/content/niaoleibaohu/BirdsChao.md
 summary: 城市化进程中，乌鸫、白头鹎等本土鸟类主动适应城市环境，改变作息、鸣唱习性并利用塑料、纤维等人造材料筑巢。相关研究显示人造巢材可提升鸟类孵化率，但同时存在缠绕、微塑料、重金属污染等隐性生存代价，本文结合多项科研成果，解读城市鸟类的生存适配与生态困境。
 coverImage: /images/niaoleibaohu/RenZaoChaoCai.png
 articleAuthor:  Raven
