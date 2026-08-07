@@ -1,11 +1,12 @@
 ---
-title: 鸟塘与诱拍相关【待补充替换科普内容】
-category: 鸟类救助
-subcategory: 野鸟基础救助教程
-tags: [野鸟, 幼鸟救助, 救助流程, 城市鸟类]
-summary: 偶遇受伤野鸟时的标准化处理流程，从观察评估到安全转运救助机构。掌握正确的急救知识，在关键时刻为鸟儿争取生存机会。
-coverImage: /images/niaoleibaohu/youPai02.jpg
+title: 鸟塘：保护还是伤害？
+category: 人鸟相处
+subcategory: 鸟塘经济的利与弊
+tags: [鸟塘, 拍鸟, 争议, 未来发展]
+summary: 客观介绍鸟塘的定义、成因与发展史，对“鸟塘经济”背后的问题与影响进行了批判性思考，并对鸟塘的未来进行了展望。
+coverImage: /images/niaoleibaohu/niaoTang.jpg
 articleAuthor: 鸟鸟
+coverAuthor: 白夜
 ---
 
 ## 一、什么是鸟塘？

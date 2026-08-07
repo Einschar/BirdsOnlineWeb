@@ -33,9 +33,16 @@ const { title = 'BirdsOnly鸟类科普 - 探索羽翼世界', description = '专
 
 <!doctype html>
 <html lang="zh-CN">
+
+
+
+
+
+
+
   <head>
 
- <!-- 套上生产环境判断，本地开发不产生测试脏数据 -->   
+ <!-- 谷歌埋点 套上生产环境判断，本地开发不产生测试脏数据 -->   
 {import.meta.env.PROD && (
   <>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6W8TF0D6XR"></script>
@@ -45,19 +52,71 @@ const { title = 'BirdsOnly鸟类科普 - 探索羽翼世界', description = '专
       gtag('js', new Date());
       gtag('config', 'G-6W8TF0D6XR');
     </script>
-  </>
+    
+    <!-- ===== 百度统计（国内用户统计） ===== -->
+     <script is:raw>
+      var _hmt = _hmt || [];
+      (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?181f34585de069e848be3bb362ea342c";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+          })();
+    </script>
+ 
+
+
+<!-- ============================================================
+  全局埋点工具（事件统计）
+  用法：在任意可点击元素上添加两个 data 属性即可自动统计：
+    data-track-category="分类"  例如 专题入口 / 专题板块 / 盲盒 / 鸟环
+    data-track-action="动作"    例如 click / refresh / open（默认 click）
+    data-track-label="标签"     例如 专题名 / 按钮文字 / 鸟名
+  统计平台：
+    - 百度统计：_hmt.push(['_trackEvent', 分类, 动作, 标签])
+    - Google Analytics：gtag('event', 动作, {event_category, event_label})
+  本地开发（dev）时统计库未加载，函数自动跳过，不产生脏数据。
+  ============================================================ -->
+<script is:raw>
+  window.trackEvent = function (category, action, label, value) {
+    try {
+      if (typeof gtag === 'function') {
+        gtag('event', action || 'click', {
+          event_category: category,
+          event_label: label || '',
+           value: value || 1
+
+    } catch (e) {}
+    try {
+      if (window._hmt) {
+        // 百度统计第4个参数为可选数值指标，业务不需要可以不传
+        if(value !== undefined){
+          window._hmt.push(['_trackEvent', category, action || 'click', label || '', value]);
+        }else{
+          window._hmt.push(['_trackEvent', category, action || 'click', label || '']);
+        }
+      }
+    } catch (e) {}
+  };
+
+  // 全局委托监听：点击任何带 data-track-category 的元素自动上报
+  document.addEventListener('click', function (e) {
+    var el = e.target && e.target.closest ? e.target.closest('[data-track-category]') : null;
+    if (el) {
+      window.trackEvent(
+        el.getAttribute('data-track-category'),
+        el.getAttribute('data-track-action') || 'click',
+        el.getAttribute('data-track-label') || ''
+      );
+    }
+  });
+</script>
+
+ </>
+
 )}
 
-    <!-- Google tag (gtag.js) 谷歌埋点-->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6W8TF0D6XR"></script>
-    <script is:raw>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
 
-        gtag('config', 'G-6W8TF0D6XR');
-    </script> 
-    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />

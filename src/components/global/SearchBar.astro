@@ -161,7 +161,7 @@
         resultsContainer!.innerHTML = deduped
           .map(
             (r) => `
-            <a href="${r.href}" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-brand-green-bg transition-colors text-sm">
+            <a href="${r.href}" data-track-category="全站搜索" data-track-label="${r.label}" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-brand-green-bg transition-colors text-sm">
               <span class="text-xs px-1.5 py-0.5 rounded bg-neutral-divider text-neutral-text-secondary shrink-0">${r.type}</span>
               <span class="text-neutral-text-body truncate">${r.label}</span>
             </a>
@@ -185,6 +185,7 @@
       if (e.key === 'Enter') {
         const firstLink = resultsContainer?.querySelector('a') as HTMLAnchorElement;
         if (firstLink && !dropdown?.classList.contains('hidden')) {
+          window.trackEvent?.('全站搜索', 'enter', input.value.trim());
           window.location.href = firstLink.href;
         }
       }

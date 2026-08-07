@@ -40,6 +40,8 @@ const topicPath = (topic: { slug: string }) => `/category/${topic.slug}`;
         {TOPICS.map((topic) => (
           <a
             href={topicPath(topic)}
+            data-track-category="顶部导航-专题入口"
+            data-track-label={topic.name}
             class="nav-link px-4 py-2 text-sm font-medium rounded-button text-neutral-text-secondary hover:text-brand-green hover:bg-brand-green-bg transition-all duration-300"
             style="transition-timing-function: var(--ease-bounce);">
             <img src={topic.icon} alt={topic.name} class="w-6 h-6 mr-1 object-contain inline-block"/>{topic.name}
@@ -66,6 +68,8 @@ const topicPath = (topic: { slug: string }) => `/category/${topic.slug}`;
     {TOPICS.map((topic) => (
       <a
         href={topicPath(topic)}
+        data-track-category="移动菜单-专题入口"
+        data-track-label={topic.name}
         class="block px-4 py-3 text-sm font-medium text-neutral-text-secondary hover:text-brand-green hover:bg-brand-green-bg rounded-lg transition-colors">
         <img src={topic.icon} alt={topic.name} class="w-4 h-4 mr-2 object-contain inline-block"/>{topic.name}
       </a>

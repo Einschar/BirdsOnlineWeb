@@ -22,6 +22,9 @@
     <!-- TODO: 后续迭代将随机逻辑改为按日期固定，实现每日更新 -->
     <button
       id="blindbox-refresh"
+      data-track-category="盲盒"
+      data-track-action="refresh"
+      data-track-label="换一个"
       class="text-sm text-brand-green-dark hover:text-brand-green transition-colors font-medium"
     >
       换一个 🔄
@@ -72,7 +75,7 @@
       : `<span class="text-6xl mb-4">🐦</span>`;
 
     container.innerHTML = `
-      <a href="/article/${article.collection}/${article.id}" class="block group">
+      <a href="/article/${article.collection}/${article.id}" data-track-category="盲盒" data-track-label="${article.data.title}" class="block group">
         <div class="flex flex-col items-center text-center">
           ${coverEmoji}
           <h4 class="text-base font-bold text-neutral-text-heading group-hover:text-brand-green-dark transition-colors mb-2">

@@ -4,7 +4,7 @@ category: 鸟类保护
 subcategory: 栖息地保护科普
 tags: [海鸟, 潜鸟, 油污, 渔网, 远洋鸟救助]
 summary: 以潜鸟等远洋鸟类为例，揭示海洋污染、渔具缠绕、船只碰撞等人类活动对海鸟生存的严重威胁，以及国内远洋鸟救助面临的困境。
-articleAuthor: fin
+articleAuthor: fin，黑鸢
 coverAuthor: Nyna，Liana等
 coverImage: /images/niaoleibaohu/seabird-threats-loon.png
 ---
